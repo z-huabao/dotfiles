@@ -1,0 +1,5 @@
+pane	test	0	:vi	1	:*	0	:/home/zhb	1	vi	:vi .tmux.conf
+pane	test	1	:~	0	:-	0	:/home/zhb	1	zsh	:
+window	test	0	1	:*	cafd,105x57,0,0,0
+window	test	1	0	:-	cafe,105x57,0,0,1
+state	test	

@@ -1,0 +1,5 @@
+pane	test	0	:~	1	:*	0	:/home/zhb	0	zsh	:
+pane	test	0	:~	1	:*	1	:/home/zhb	1	zsh	:
+pane	test	0	:~	1	:*	2	:/home/zhb	0	zsh	:
+window	test	0	1	:*	40e0,125x23,0,0{72x23,0,0,0,52x23,73,0[52x10,73,0,5,52x12,73,11,6]}
+state	test	

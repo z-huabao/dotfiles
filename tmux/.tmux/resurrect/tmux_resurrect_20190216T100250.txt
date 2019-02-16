@@ -1,0 +1,5 @@
+pane	test	1	:zsh	1	:*	1	:/home/zhb	1	zsh	:
+pane	tt	0	:zsh	1	:*	1	:/home/zhb	1	zsh	:
+window	test	1	1	:*	cb02,105x57,0,0,5
+window	tt	0	1	:*	caff,105x57,0,0,2
+state	test	

@@ -1,0 +1,11 @@
+pane	11	1	:vi	1	:*	1	:/home/zhb	0	top	:top
+pane	11	1	:vi	1	:*	2	:/home/zhb	1	vi	:vi .tmux.conf
+pane	13	1	:vi	1	:*	1	:/home/zhb	1	top	:top
+pane	13	1	:vi	1	:*	2	:/home/zhb	0	vi	:vi .tmux.conf
+pane	15	1	:vi	1	:*	1	:/home/zhb	1	vi	:vi .tmux.conf
+pane	test	1	:~	1	:*	1	:/home/zhb	1	zsh	:
+window	11	1	1	:*	cbcf,125x23,0,0{62x23,0,0,38,62x23,63,0,39}
+window	13	1	1	:*	8bbf,125x23,0,0{62x23,0,0,41,62x23,63,0,42}
+window	15	1	1	:*	daf4,125x23,0,0,44
+window	test	1	1	:*	5af7,125x23,0,0,37
+state	15	

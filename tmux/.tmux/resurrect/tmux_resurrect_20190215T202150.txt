@@ -1,0 +1,4 @@
+pane	test	0	:git	1	:*	0	:/home/zhb	0	vi	:vi .tmux.conf
+pane	test	0	:git	1	:*	1	:/home/zhb/applications	1	git	:git clone https://github.com/tmux/tmux.git
+window	test	0	1	:*	9380,212x59,0,0{106x59,0,0,0,105x59,107,0,1}
+state	test	
