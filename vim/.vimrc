@@ -270,3 +270,5 @@ nnoremap <Right> 4l
 nnoremap Y y$
 
 autocmd FileType python nnoremap <buffer> dp Oimport ipdb; ipdb.set_trace()<C-[>
+autocmd FileType python nnoremap <buffer> d/ O#!/usr/bin/env python3<C-[>
+autocmd FileType sh nnoremap <buffer> d/ O#!/usr/bin/env bash<C-[>

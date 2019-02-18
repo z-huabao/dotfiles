@@ -33,9 +33,6 @@ alias tmkill="tmux kill-session -t"
 alias tmatt="tmux attach-session -t"
 alias tmls="tmux ls"
 
-# shortcut
-alias run-xkey="nohup sudo xkeysnail ~/ubuntu-config/others/xkeysrc.py > /tmp/xkeys.out "
-
 # add by zhb
 #export HIST_STAMPS="yyyy-mm-dd"
 

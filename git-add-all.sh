@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 files=$(find ./ | grep .git -v)
 #echo ${files//.\// }
