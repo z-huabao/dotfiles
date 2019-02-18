@@ -14,7 +14,11 @@ do
     git add $f
 done
 
-git commit -m "$1"
+if [ -z "$1" ]; then
+    git commit -m "update config files"
+else
+    git commit -m $1
+fi
 #git push -u origin master
 git push
 
