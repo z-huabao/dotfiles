@@ -1,12 +1,21 @@
 #/usr/bin/env bash
 
-cdir=~/ubuntu-config
-
 cd ~
 
-ln -s -f $cdir/tmux/.tmux.conf && ln -s -f $cdir/tmux/.tmux
-ln -s -f $cdir/vim/.vim && ln -s -f $cdir/vim/.vimrc
-ln -s -f $cdir/zsh/.antigen && ln -s -f $cdir/zsh/.zshrc && ln -s -f $cdir/zsh/antigen.zsh
+paths="
+    tmux/.tmux.conf
+    tmux/.tmux
+    vim/.vimrc
+    vim/.vim
+    zsh/.zshrc
+    zsh/.antigen
+    zsh/antigen.sh
+"
+
+for path in $paths
+do
+    ln -s -f ~/ubuntu-config/$path
+done
 
 sudo apt install tmux vim zsh antigen trash-cli
 

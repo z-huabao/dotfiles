@@ -33,6 +33,7 @@ set foldlevel=3 	      " 默认展开3层，zm全部折叠一层，zr全部展�
 "set t_ti= t_te=  	      " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 set cursorline            " 高亮光标行
 "set vbs=4                 " 日志verbose
+filetype indent on
 
 syntax on                 " 开启语法检测
 syntax enable             " 打开语法高亮
@@ -47,7 +48,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
 """"""""""""""""""""""VUNDLE PLUGIN""""""""""""""""""""
 " Vundle config plugin start
 set rtp+=~/.vim/bundle/Vundle.vim
-filetype off
+"filetype off
 filetype plugin indent on
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
@@ -65,7 +66,6 @@ Plugin 'scrooloose/nerdcommenter'        " 批量注释 F4
 Plugin 'iamcco/markdown-preview.vim'     " markdown预览
 Plugin 'Chiel92/vim-autoformat'          " pep8 风格格式化代码
 Plugin 'kien/rainbow_parentheses.vim'    " 不同颜色匹配括号
-"Plugin 'thinca/vim-quickrun'             "
 "Plugin 'w0rp/ale'                        " 代码检查
 "Plugin 'kana/vim-submode'                " 创建新模式，例如window mode
 call vundle#end()
@@ -269,4 +269,4 @@ nnoremap <Right> 4l
 " Shift+y copy to end of current line
 nnoremap Y y$
 
-nnoremap di Oimport ipdb; ipdb.set_trace()<C-[>
+autocmd FileType python nnoremap <buffer> dp Oimport ipdb; ipdb.set_trace()<C-[>
