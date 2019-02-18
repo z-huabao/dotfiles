@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+
+# change this line (username and password):
+Exec=/home/zhb/ubuntu-config/others/run-xkey.sh 'password'
+
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+Name[en_NG]=xkey
+Name=xkey
+Comment[en_NG]=Start xkey On Startup
+Comment=Start xkey On Startup
+
