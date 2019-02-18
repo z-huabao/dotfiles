@@ -1,7 +1,7 @@
 source ~/ubuntu-config/zsh/antigen.zsh
 
-antigen use oh-my-zsh  # 加载oh-my-zsh库
-antigen theme robbyrussell  # 加载主题
+antigen use oh-my-zsh                           # 加载oh-my-zsh库
+antigen theme robbyrussell                      # 加载主题
 
 # 加载原版oh-my-zsh中的功能(robbyrussell's oh-my-zsh).
 antigen bundle git
