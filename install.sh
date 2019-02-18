@@ -18,7 +18,7 @@ do
 done
 
 # config tmux, zsh, vim
-sudo apt install tmux vim zsh antigen trash-cli
+sudo apt install tmux vim zsh zsh-antigen trash-cli
 # use zsh as default shell
 chsh -s /bin/zsh
 
@@ -27,9 +27,14 @@ chsh -s /bin/zsh
 sudo apt install python3-pip
 sudo pip3 install xkeysnail
 
-echo Please change username and password in '~/.config/autostart/'
-cp ~/ubuntu-config/others/xkey.desktop ~/.config/autostart/
-vi ~/.config/autostart/xkey.desktop
+xfile=~/.config/autostart/xkey.desktop
+if [ ! -f "$xfile" ]; then
+    echo Please change username and password in $xfile
+    cp ~/ubuntu-config/others/xkey.desktop ~/.config/autostart/
+    vi $xfile
+else
+    echo File $xfile has exists!
+fi
 
 
 echo -e "\nFinish!\n"
