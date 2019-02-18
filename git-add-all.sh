@@ -10,6 +10,8 @@ do
     else
         if [ ${f:(-4)} == ".pyc" ]; then
             echo "pass file: $f"
+        elif [ $f =~ 'tmux/resurrect' ]; then
+            echo "pass local file: $f"
         else
             echo "add file: $f"
             git add -f $f

@@ -1,4 +1,4 @@
-source ~/ubuntu-config/zsh/antigen.zsh
+source ~/antigen.zsh
 
 antigen use oh-my-zsh                           # 加载oh-my-zsh库
 antigen theme robbyrussell                      # 加载主题

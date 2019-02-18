@@ -9,8 +9,8 @@ paths="
     vim/.vim
     zsh/.zshrc
     zsh/.antigen
+    zsh/antigen.zsh
 "
-    #zsh/antigen.zsh
 
 for path in $paths
 do
