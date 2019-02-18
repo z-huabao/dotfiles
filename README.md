@@ -10,7 +10,7 @@
     git clone https://github.com/z-huabao/ubuntu-config
     cd ubuntu-config && ./install.sh
 
-##tmux cloned plugins:
+## tmux cloned plugins:
 
     set -g @plugin 'tmux-plugins/tpm'
     set -g @plugin 'tmux-plugins/tmux-sensible'
@@ -22,7 +22,7 @@
     set -g @plugin 'nhdaly/tmux-better-mouse-mode'
     set -g @plugin 'tmux-plugins/tmux-logging'
 
-##zsh cloned plugins(use antigen):
+## zsh cloned plugins(use antigen):
 
     antigen use oh-my-zsh                            # 加载oh-my-zsh库
     antigen theme robbyrussell                       # 加载主题
