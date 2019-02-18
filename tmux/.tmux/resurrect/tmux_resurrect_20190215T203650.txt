@@ -1,4 +1,0 @@
-pane	test	0	:..ications/tmux	1	:*	0	:/home/zhb	0	zsh	:
-pane	test	0	:..ications/tmux	1	:*	1	:/home/zhb/applications/tmux	1	zsh	:
-window	test	0	1	:*	9d54,125x22,0,0{62x22,0,0,0,62x22,63,0,1}
-state	test	

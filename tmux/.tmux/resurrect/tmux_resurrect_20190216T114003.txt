@@ -1,4 +1,0 @@
-pane	test	1	:zsh	1	:*	1	:/home/zhb	0	vi	:vi .tmux.conf.local
-pane	test	1	:zsh	1	:*	2	:/home/zhb	1	zsh	:
-window	test	1	1	:*	feb3,105x57,0,0[105x28,0,0,0,105x28,0,29,1]
-state	test	

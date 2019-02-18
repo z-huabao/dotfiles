@@ -1,8 +1,0 @@
-pane	test	0	:~	1	:*	0	:/home/zhb	0	vi	:vi .tmux.conf
-pane	test	0	:~	1	:*	1	:/home/zhb	1	zsh	:
-pane	test	1	:~	0	:-	0	:/home/zhb	1	zsh	:
-pane	tt	0	:~	1	:*	0	:/home/zhb	1	zsh	:
-window	test	0	1	:*	7eb5,105x57,0,0[105x28,0,0,0,105x28,0,29,4]
-window	test	1	0	:-	cafe,105x57,0,0,1
-window	tt	0	1	:*	cb00,105x57,0,0,3
-state	test	tt

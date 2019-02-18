@@ -1,7 +1,0 @@
-pane	cameraView	1	:zsh	1	:*	1	:/home/zhb	1	zsh	:
-pane	test	1	:vi	1	:*	1	:/home/zhb/my_projects/tools/cameraView	0	vi	:vi main.py
-pane	test	1	:vi	1	:*	2	:/home/zhb/my_projects/tools/cameraView	0	vi	:vi camera.kv
-pane	test	1	:vi	1	:*	3	:/home/zhb/my_projects/tools/cameraView	1	zsh	:
-window	cameraView	1	1	:*	afdd,212x60,0,0,0
-window	test	1	1	:*	74ff,212x60,0,0{106x60,0,0,1,105x60,107,0[105x45,107,0,3,105x14,107,46,4]}
-state	test	cameraView

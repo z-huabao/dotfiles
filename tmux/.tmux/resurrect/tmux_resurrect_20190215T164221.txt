@@ -1,3 +1,0 @@
-pane	test	0	:vi	1	:*	0	:/home/zhb	1	vi	:vi .tmux.conf
-window	test	0	1	:*	cafd,105x57,0,0,0
-state	test	

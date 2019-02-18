@@ -1,3 +1,0 @@
-pane	test	0	:~	1	:*	0	:/home/zhb	1	zsh	:
-window	test	0	1	:*	b57d,125x23,0,0,0
-state	test	
