@@ -17,8 +17,10 @@ do
     ln -s -f ~/ubuntu-config/$path
 done
 
+rm ~/.antigen/init.zsh
+
 # config tmux, zsh, vim
-sudo apt install tmux vim zsh zsh-antigen trash-cli
+sudo apt install tmux vim zsh zsh-antigen trash-cli lua5.2
 # use zsh as default shell
 chsh -s /bin/zsh
 
@@ -35,6 +37,10 @@ if [ ! -f "$xfile" ]; then
 else
     echo File $xfile has exists!
 fi
+
+echo Please copy env Paths from .bashrc to .zshrc
+vi -O ~/.bashrc ~/.zshrc
+
 
 
 echo -e "\nFinish!\n"
