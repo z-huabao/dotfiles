@@ -66,6 +66,7 @@ Plugin 'scrooloose/nerdcommenter'        " 批量注释 F4
 Plugin 'iamcco/markdown-preview.vim'     " markdown预览
 Plugin 'Chiel92/vim-autoformat'          " pep8 风格格式化代码
 Plugin 'kien/rainbow_parentheses.vim'    " 不同颜色匹配括号
+Plugin 'yegappan/mru'                    " most recently used file
 "Plugin 'w0rp/ale'                        " 代码检查
 "Plugin 'kana/vim-submode'                " 创建新模式，例如window mode
 call vundle#end()
@@ -79,10 +80,12 @@ let g:airline_theme='luna'
 " tab补全设置
 let g:jedi#popup_on_dot = 0
 
-let NERDTreeChDirMode=1
-let NERDTreeShowBookmarks=1 "显示书签
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$'] "设置忽略文件类型
-let NERDTreeWinSize=25 "窗口大小
+let g:NERDTreeChDirMode=1
+let g:NERDTreeShowBookmarks=1 "显示书签
+let g:NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$'] "设置忽略文件类型
+let g:NERDTreeWinSize=25 "窗口大小
+" close tree if only tree left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:indentLine_char='┆' "缩进指示线
 let g:indentLine_enabled = 1
@@ -129,7 +132,13 @@ let g:ale_completion_enabled = 1
 let g:airline#extensions#ale#enabled = 1
 "let g:ale_sign_column_always = 1
 
+" MRU
+let MRU_File = '~/.cache/vim_mru'
+nmap <leader>f :MRU<CR>
+
+
 """""""""""""""""""""""""KEY MAPPING""""""""""""""""""""
+
 " F2切换行号显示
 nnoremap <F2> :set nonu!<CR>:set relativenumber!<CR>
 

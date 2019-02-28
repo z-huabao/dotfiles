@@ -38,8 +38,13 @@ else
     echo File $xfile has exists!
 fi
 
-echo Please copy env Paths from .bashrc to .zshrc
-vi -O ~/.bashrc ~/.zshrc
+vfile=~/.zshrc-var
+if [ ! -f "$vfile" ]; then
+    echo '# Please copy env Paths from ~/.bashrc to ~/.zshrc-var' > $vfile
+    vi -O ~/.bashrc ~/.zshrc-var
+else
+    echo File $vfile has exists!
+fi
 
 
 
