@@ -91,7 +91,7 @@ let g:indentLine_char='┆' "缩进指示线
 let g:indentLine_enabled = 1
 
 " custom comment
-let g:NERDCustomDelimiters = {'kivy': {'left': '# '} }
+let g:NERDCustomDelimiters = {'kivy': {'left': '# '}, 'prototxt': {'left': '# '} }
 
 " Markdown config
 let g:mkdp_path_to_chrome='google-chrome'

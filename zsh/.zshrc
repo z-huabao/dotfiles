@@ -13,6 +13,7 @@ antigen bundle command-not-found
 antigen bundle cp                                # 复制进度条
 antigen bundle extract                           # 解压
 #antigen bundle vi-mode
+antigen bundle docker docker-compose
 
 antigen bundle zsh-users/zsh-syntax-highlighting # 语法高亮功能
 antigen bundle zsh-users/zsh-autosuggestions     # 代码提示功能
