@@ -20,13 +20,13 @@ done
 rm ~/.antigen/init.zsh
 
 # config tmux, zsh, vim
-sudo apt install tmux vim zsh zsh-antigen trash-cli lua5.2
+sudo apt install -y tmux vim zsh zsh-antigen trash-cli lua5.2
 # use zsh as default shell
 chsh -s /bin/zsh
 
 
 # config xkeysnail to autostart
-sudo apt install python3-pip
+sudo apt install -y python3-pip
 sudo pip3 install xkeysnail
 
 xfile=~/.config/autostart/xkey.desktop
