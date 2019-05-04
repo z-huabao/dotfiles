@@ -35,3 +35,6 @@ alias tmkill="tmux kill-session -t"
 alias tmatt="tmux attach-session -t"
 alias tmls="tmux ls"
 
+# docker
+alias ndocker="nvidia-docker"
+
