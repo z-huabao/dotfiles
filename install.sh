@@ -19,16 +19,15 @@ done
 
 rm ~/.antigen/init.zsh
 
-su
 # config tmux, zsh, vim
-apt install -y tmux vim zsh zsh-antigen trash-cli lua5.2
+sudo apt install -y tmux vim zsh zsh-antigen trash-cli lua5.2
 # use zsh as default shell
 chsh -s /bin/zsh
 
 
 # config xkeysnail to autostart
-apt install -y python3-pip
-pip3 install xkeysnail
+sudo apt install -y python3-pip
+sudo pip3 install xkeysnail
 
 xfile=~/.config/autostart/xkey.desktop
 if [ ! -f "$xfile" ]; then
