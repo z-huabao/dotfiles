@@ -184,15 +184,11 @@ func! RunCpp()
 endfunc
 
 func! RunPython()
-    ":compiler pyunit
     if search("python3")
         exec '!time python3 %'
-        ":set makeprg=python3\ %
     else
         exec '!time python2 %'
-        ":set makeprg=python2\ %
     endif
-    ":make && cw
 endfunc
 
 " <F6>

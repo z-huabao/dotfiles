@@ -2,6 +2,7 @@
 
 files="
     ./README.md
+    ./shadowsocks.pac
     ./*.sh
     ./others/*
     ./tmux/.tmux.conf
