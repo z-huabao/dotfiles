@@ -5,6 +5,7 @@
 var proxy = "SOCKS5 127.0.0.1:1080;";
 
 var domains = {
+  "extensions.gnome.org": 1,
   "discuss.pytorch.org": 1,
   "www.quora.com": 1,
   "archive.ubuntukylin.com": 1,
