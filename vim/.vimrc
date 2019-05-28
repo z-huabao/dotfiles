@@ -175,6 +175,7 @@ func! CompileRunGcc()
         exec "!go build %<"
         exec "!time go run %"
     endif
+    return ''
 endfunc
 
 func! RunCpp()
@@ -184,11 +185,10 @@ func! RunCpp()
 endfunc
 
 func! RunPython()
-    if search("python3")
-        exec '!time python3 %'
-    else
-        exec '!time python2 %'
-    endif
+    let curpos = getcurpos()[1]
+    let vpy = search('python3') ? 3 : 2
+    exec curpos
+    exec '!time python'.vpy.' %'
 endfunc
 
 " <F6>
