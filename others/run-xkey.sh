@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+xhost +
+
 count=`ps -ef |grep xkeysnail |grep -v "grep" |wc -l`
 
 if [ 0 == $count ];then
@@ -12,6 +14,7 @@ else
     echo -e "\nWarning: There has $count xkeysnail process now!\n"
 fi
 
+cat /tmp/xkeys.out
 echo -e "\nFinish!\n"
 
 
