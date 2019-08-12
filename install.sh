@@ -46,6 +46,7 @@ else
     echo File $vfile has exists!
 fi
 
+ln -s ~/ubuntu-config/ranger/rc.conf ~/.config/ranger/rc.conf
 
 
 echo -e "\nFinish!\n"
