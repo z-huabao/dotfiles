@@ -30,10 +30,12 @@ set shiftwidth=4
 set shiftround
 set fdm=indent   	      " 代码折叠，光标在缩进下方时用za命令折叠或展开这块代码
 set foldlevel=3 	      " 默认展开3层，zm全部折叠一层，zr全部展开一层，zn全部展开
-"set t_ti= t_te=  	      " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 set cursorline            " 高亮光标行
+set conceallevel=0
+"set t_ti= t_te=  	      " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 "set vbs=4                 " 日志verbose
 filetype indent on
+au! FileType python setl nosmartindent
 
 syntax on                 " 开启语法检测
 syntax enable             " 打开语法高亮
@@ -48,30 +50,43 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
 """"""""""""""""""""""VUNDLE PLUGIN""""""""""""""""""""
 " Vundle config plugin start
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/ubuntu-config/fzf
+
 "filetype off
 filetype plugin indent on
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'yianwillis/vimcdoc'              " 中文手册
-Plugin 'ervandew/supertab'               " tab 自动补全
-Plugin 'tomasr/molokai'                  " 配色
-Plugin 'davidhalter/jedi-vim'            " 自动补全代码
+Plugin 'yianwillis/vimcdoc'             " 中文手册
+Plugin 'ervandew/supertab'              " tab 自动补全
+Plugin 'tomasr/molokai'                 " 配色
+Plugin 'davidhalter/jedi-vim'           " 自动补全代码
+Plugin 'vim-airline/vim-airline'        " 底部状态栏
+Plugin 'vim-airline/vim-airline-themes' " 底部状态栏主题
+Plugin 'scrooloose/nerdtree'            " 目录树
+Plugin 'Yggdroot/indentLine'            " 缩进指示
+Plugin 'jiangmiao/auto-pairs'           " 自动补全括号
+Plugin 'scrooloose/nerdcommenter'       " 批量注释 F4
+Plugin 'iamcco/markdown-preview.vim'    " markdown预览
+Plugin 'Chiel92/vim-autoformat'         " pep8 风格格式化代码
+Plugin 'kien/rainbow_parentheses.vim'   " 不同颜色匹配括号
+Plugin 'mileszs/ack.vim'                " 查找工程文件
+Plugin 'rafaqz/ranger.vim'              " range
+Plugin 'itchyny/vim-cursorword'         " bottom-light curosr word
+Plugin 'lfv89/vim-interestingwords'     " multi color search word
+Plugin 'jpalardy/vim-slime'             " send code to ipython to run
+Plugin 'junegunn/fzf.vim'               " browser file, recent file
+Plugin 'junegunn/vim-easy-align'        " 对齐文本
+Plugin 'tpope/vim-surround'             " 括号等字符处理
+Plugin 'terryma/vim-multiple-cursors'   " multi corsors edit
+Plugin 'brooth/far.vim'                 " Far, fast rext replace/find
+Plugin 'majutsushi/tagbar'              " (显示大纲)over view code
+Plugin 'MattesGroeger/vim-bookmarks'    " mark label
 "Plugin 'Valloric/YouCompleteMe'         " 自动补全（加载太慢了）
-Plugin 'vim-airline/vim-airline'         " 底部状态栏
-Plugin 'vim-airline/vim-airline-themes'   " 底部状态栏主题
-Plugin 'scrooloose/nerdtree'             " 目录树
-Plugin 'Yggdroot/indentLine'             " 缩进指示
-Plugin 'jiangmiao/auto-pairs'            " 自动补全括号
-Plugin 'scrooloose/nerdcommenter'        " 批量注释 F4
-Plugin 'iamcco/markdown-preview.vim'     " markdown预览
-Plugin 'Chiel92/vim-autoformat'          " pep8 风格格式化代码
-Plugin 'kien/rainbow_parentheses.vim'    " 不同颜色匹配括号
-Plugin 'yegappan/mru'                    " most recently used file
-"Plugin 'w0rp/ale'                        " 代码检查
-"Plugin 'kana/vim-submode'                " 创建新模式，例如window mode
+"Plugin 'yegappan/mru'                   " most recently used file
+"Plugin 'w0rp/ale'                       " 代码检查
+"Plugin 'kana/vim-submode'               " 创建新模式，例如window mode
 call vundle#end()
 " finally press command 'PluginInstall' to installk
-
 """""""""""""""""""""" blugin config """""""""""""""""""""""
 " 配色设置
 colorscheme molokai
@@ -127,16 +142,61 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " 代码检查
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-let g:airline#extensions#ale#enabled = 1
+"let g:ale_fix_on_save = 1
+"let g:ale_completion_enabled = 1
+"let g:airline#extensions#ale#enabled = 1
 "let g:ale_sign_column_always = 1
 
 " MRU
-let MRU_File = '~/.cache/vim_mru'
-nmap <leader>f :MRU<CR>
+"let g:MRU_File = '~/.cache/vim_mru'
+"nmap <leader>f :MRU<CR>
 
+" search
+let g:ackhighlight = 1
 
+" ranger.vim
+let g:ranger_terminal = 'urxvt -e'
+let g:ranger_terminal = 'xterm -e'
+map <leader>rr :RangerEdit<cr>
+map <leader>rv :RangerVSplit<cr>
+map <leader>rs :RangerSplit<cr>
+map <leader>rt :RangerTab<cr>
+map <leader>ri :RangerInsert<cr>
+map <leader>ra :RangerAppend<cr>
+map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
+map <leader>rd :RangerCD<cr>
+map <leader>rld :RangerLCD<cr>
+
+" color search word
+nnoremap <silent> * :call InterestingWords('n')<cr>
+vnoremap <silent> * :call InterestingWords('v')<cr>
+nnoremap <silent> # :call UncolorAllWords()<cr>
+
+nnoremap <silent> n :call WordNavigation('forward')<cr>
+nnoremap <silent> N :call WordNavigation('backward')<cr>
+
+" vim-slime
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
+let g:slime_python_ipython = 1
+xmap <Leader>ss <Plug>SlimeRegionSend
+nmap <Leader>ss <Plug>SlimeParagraphSend
+nmap <Leader>v  <Plug>SlimeConfig
+
+" fzf
+nmap <leader>f :History<CR>
+
+" easy align
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)<Space>
+
+" Far
+"let g:far#source = 'ack'
+let g:far#window_layout = 'bottom'
+let g:far#preview_window_layout = 'right'
+
+" Tagbar
+nmap <Leader>t :TagbarToggle<CR>
 """""""""""""""""""""""""KEY MAPPING""""""""""""""""""""
 
 " F2切换行号显示
@@ -185,9 +245,9 @@ func! RunCpp()
 endfunc
 
 func! RunPython()
-    let curpos = getcurpos()[1]
-    let vpy = search('python3') ? 3 : 2
-    exec curpos
+    "let curpos = getcurpos()[1]
+    let vpy = search('python3', 'n') ? 3 : 2
+    "exec curpos
     exec '!time python'.vpy.' %'
 endfunc
 
@@ -235,45 +295,66 @@ inoremap ''' ''''''<C-o>2h
 inoremap """ """"""<C-o>2h
 
 " 在Normal Mode和Visual/Select Mode下，利用Tab键和Shift-Tab键来缩进文本
+vnoremap > >gv
+vnoremap < <gv
 nnoremap <tab> >>
 nnoremap <S-tab> <<
 vnoremap <tab> >gv
 vnoremap <S-tab> <gv
-vnoremap > >gv
-vnoremap < <gv
+nnoremap <C-l> <C-i>
 
-" 分割窗口Ctrl+w +v or +s
+" window manager
+nnoremap <Esc> <C-w>
 nnoremap <Esc>- <C-w>s
 nnoremap <Esc>\ <C-w>v
-" quicker window switching
-" 关闭窗口Ctrl+w  +q
-nnoremap <Esc> <C-w>
+
 "nnoremap <Esc>h <C-w>h
 "nnoremap <Esc>j <C-w>j
 "nnoremap <Esc>k <C-w>k
 "nnoremap <Esc>l <C-w>l
 
-" quicker window resize
-nnoremap <Esc>Left  <C-w>3<
-nnoremap <Esc>Down  <C-w>3-
-nnoremap <Esc>Up    <C-w>3+
-nnoremap <Esc>Right <C-w>3>
+"nnoremap <Esc>Left  <C-w>3<
+"nnoremap <Esc>Down  <C-w>3-
+"nnoremap <Esc>Up    <C-w>3+
+"nnoremap <Esc>Right <C-w>3>
 
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <Esc>z :ZoomToggle<CR>
 
 " emoji
 inoremap <C-e> <C-X><C-U>
 
-" 滚动， ESC 就是Alt键
+" 滚动
 nnoremap <Down> 4<C-e>
 nnoremap <Up> 4<C-y>
-"nnoremap <Down> 4j
-"nnoremap <Up> 4k
-nnoremap <Left> 4h
-nnoremap <Right> 4l
+nnoremap <Left> ^
+nnoremap <Right> $
 
 " Shift+y copy to end of current line
 nnoremap Y y$
 
-autocmd FileType python nnoremap <buffer> dp Oimport ipdb; ipdb.set_trace()<C-[>
+" search text
+nnoremap <Leader>a :Ack!<Space>
+vnoremap <Leader>a y<CR>:Ack! '<C-r>"'
+"vnoremap * y<CR>/<C-r>"<CR>
+
+" upper, lower case recent text
+nnoremap <Leader>u gu'[
+nnoremap <Leader>U gU'[
+
+autocmd FileType python nnoremap <buffer> dip Oimport ipdb; ipdb.set_trace()<C-[>
 autocmd FileType python nnoremap <buffer> d/ O#!/usr/bin/env python3<C-[>
 autocmd FileType sh nnoremap <buffer> d/ O#!/usr/bin/env bash<C-[>
+
