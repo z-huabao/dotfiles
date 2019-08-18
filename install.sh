@@ -20,7 +20,7 @@ done
 rm ~/.antigen/init.zsh
 
 # config tmux, zsh, vim
-sudo apt install -y tmux vim vim-gnome zsh zsh-antigen trash-cli lua5.2
+sudo apt install -y tmux vim vim-gnome zsh zsh-antigen trash-cli lua5.2 ranger
 # use zsh as default shell
 chsh -s /bin/zsh
 
@@ -46,6 +46,7 @@ else
     echo File $vfile has exists!
 fi
 
+ln -s ~/ubuntu-config/ranger/rc.conf ~/.config/ranger/rc.conf
 
 
 echo -e "\nFinish!\n"
