@@ -64,8 +64,8 @@ echo
 echo '#-------------------------- tmux -----------------------------'
 sudo apt install -y tmux
 mkdir -p -m 777 $plug_dir/tmux $plug_dir/tmux/plugins
-git clone https://github.com/tmux-plugins/tpm $plug_dir/tmux/plugins/tpm \
-    && bash $plug_dir/tmux/tpm/bindings/install_plugins
+git clone https://github.com/tmux-plugins/tpm $plug_dir/tmux/plugins/tpm
+bash $plug_dir/tmux/plugins/tpm/bindings/install_plugins
 
 rm -r ~/.tmux
 ln -s -f $plug_dir/tmux ~/.tmux
