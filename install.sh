@@ -38,7 +38,7 @@ sudo apt -y install software-properties-common
 echo
 echo '#-------------------------- zsh -----------------------------'
 sudo apt install -y zsh zsh-antigen trash-cli lua5.2
-mkdir -p -m 777 $plug_dir/antigen/bundles
+mkdir -p -m 777 $plug_dir/antigen/ $plug_dir/antigen/bundles
 
 antigen_pkg=$plug_dir/antigen/antigen.zsh
 if [ ! -f $antigen_pkg ]; then
@@ -63,6 +63,7 @@ fi
 echo
 echo '#-------------------------- tmux -----------------------------'
 sudo apt install -y tmux
+mkdir -p -m 777 $plug_dir/tmux $plug_dir/tmux/plugins
 git clone https://github.com/tmux-plugins/tpm $plug_dir/tmux/plugins/tpm \
     && bash $plug_dir/tmux/tpm/bindings/install_plugins
 
@@ -77,7 +78,7 @@ sudo apt install -y neovim
 sudo apt purge -y vim vim-gnome
 sudo pip3 install --user jedi
 
-mkdir -p -m 777 $plug_dir/nvim/plugins $plug_dir/nvim/autoload
+mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r ~/.config/nvim
 ln -s -f $plug_dir/nvim ~/.config/nvim
 ln -s -f $dotf_dir/nvim/init.vim ~/.config/nvim/init.vim
@@ -103,8 +104,11 @@ ln -s -f $dotf_dir/ranger/rc.conf ~/.config/ranger/rc.conf
 echo
 echo '#-------------------------- fzf -----------------------------'
 #sudo apt install -y fzf
+mkdir -p -m 777 $plug_dir/fzf
 git clone https://github.com/junegunn/fzf.git $plug_dir/fzf \
     && $plug_dir/fzf/install
+
+rm -r ~/.fzf
 ln -s -f $plug_dir/fzf ~/.fzf
 
 echo
