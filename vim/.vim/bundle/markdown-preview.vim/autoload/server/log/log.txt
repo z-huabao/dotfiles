@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/home/zhb/.vim/bundle/markdown-preview.vim/autoload/server/server.py", line 59, in _dealConnect
-    ret = f(conn)
-  File "/home/zhb/.vim/bundle/markdown-preview.vim/autoload/server/server.py", line 87, in dealConnect
-    reqMethod, path, protcl = hItmes[0].split(u' ')
-ValueError: need more than 1 value to unpack
