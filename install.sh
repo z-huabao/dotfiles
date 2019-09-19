@@ -4,7 +4,9 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#-------------------------- prepare -----------------------------
+echo
+echo '#-------------------------- prepare -----------------------------'
+# mkdir -p -m 777 ~/.config/
 dotf_dir=$PWD
 cd ..
 mkdir -p -m 777 plugins && cd plugins
@@ -29,18 +31,24 @@ add_ppa() {
   fi
 }
 
-sudo apt -y install make git python3-pip
+sudo apt -y install make git curl python3-pip
 sudo apt -y install software-properties-common
 
 
-#-------------------------- zsh -----------------------------
+echo
+echo '#-------------------------- zsh -----------------------------'
 sudo apt install -y zsh zsh-antigen trash-cli lua5.2
-mkdir -p -m 777 ~/.antigen/ $plug_dir/antigen/
-curl -L git.io/antigen > $plug_dir/antigen/antigen.zsh
+mkdir -p -m 777 $plug_dir/antigen/bundles
+
+antigen_pkg=$plug_dir/antigen/antigen.zsh
+if [ ! -f $antigen_pkg ]; then
+    curl -L git.io/antigen > $antigen_pkg
+fi
+
 chsh -s /bin/zsh  # use zsh as default shell
 
-rm ~/.antigen/bundles
-ln -s -f $plug_dir/antigen ~/.antigen/bundles
+rm -r ~/.antigen
+ln -s -f $plug_dir/antigen ~/.antigen
 ln -s -f $dotf_dir/zsh/zshrc ~/.zshrc
 
 vfile=~/.zshrc-var
@@ -52,45 +60,56 @@ else
 fi
 
 
-#-------------------------- tmux -----------------------------
+echo
+echo '#-------------------------- tmux -----------------------------'
 sudo apt install -y tmux
-git clone https://github.com/tmux-plugins/tpm $plug_dir/tmux/tpm \
+git clone https://github.com/tmux-plugins/tpm $plug_dir/tmux/plugins/tpm \
     && bash $plug_dir/tmux/tpm/bindings/install_plugins
 
-mkdir -p -m 777 ~/.tmux/
-rm ~/.tmux/plugins
-ln -s -f $plug_dir/tmux ~/.tmux/plugins
+rm -r ~/.tmux
+ln -s -f $plug_dir/tmux ~/.tmux
 ln -s -f $dotf_dir/tmux/tmux.conf ~/.tmux.conf
 
-#-------------------------- neovim -----------------------------
+echo
+echo '#-------------------------- neovim -----------------------------'
 add_ppa neovim-ppa/stable
 sudo apt install -y neovim
 sudo apt purge -y vim vim-gnome
+sudo pip3 install --user jedi
 
-mkdir -p -m 777 ~/.config/nvim $plug_dir/nvim
-rm ~/.config/nvim/plugins
-ln -s -f $plug_dir/nvim ~/.config/nvim/plugins
-ln -s -f $dotf_dir/vim/init.vim ~/.config/nvim/init.vim
+mkdir -p -m 777 $plug_dir/nvim/plugins $plug_dir/nvim/autoload
+rm -r ~/.config/nvim
+ln -s -f $plug_dir/nvim ~/.config/nvim
+ln -s -f $dotf_dir/nvim/init.vim ~/.config/nvim/init.vim
 
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim_plug=$plug_dir/nvim/autoload/plug.vim
+if [ ! -f $vim_plug ]; then
+    curl -fLo $vim_plug --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
 nvim +PlugInstall +qall
 
 
-#-------------------------- ranger -----------------------------
+echo
+echo '#-------------------------- ranger -----------------------------'
 sudo apt install -y ranger
 sudo apt install -y caca-utils highlight atool w3m poppler-utils mediainfo
+
+mkdir -p -m 777 ~/.config/ranger
 ln -s -f $dotf_dir/ranger/rc.conf ~/.config/ranger/rc.conf
 
 
-#-------------------------- fzf -----------------------------
+echo
+echo '#-------------------------- fzf -----------------------------'
 #sudo apt install -y fzf
 git clone https://github.com/junegunn/fzf.git $plug_dir/fzf \
     && $plug_dir/fzf/install
 ln -s -f $plug_dir/fzf ~/.fzf
 
-#-------------------------- xkeysnail -----------------------------
-sudo pip3 install xkeysnail pyuserinput
+echo
+echo '#-------------------------- xkeysnail -----------------------------'
+sudo pip3 install --user xkeysnail pyuserinput
 xfile=~/.config/autostart/xkey.desktop
 if [ ! -f "$xfile" ]; then
     echo Please change username and password in $xfile
@@ -102,5 +121,5 @@ fi
 
 
 
-#-------------------------- finish -----------------------------
-echo -e "\nFinish!\n"
+echo
+echo '#-------------------------- finish -----------------------------'
