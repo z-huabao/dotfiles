@@ -24,6 +24,8 @@ antigen bundle skywind3000/z.lua                 # 快速切换目录
 antigen apply
 
 antigen cache-gen
+
+
 # -------------------- map keys --------------------------
 bindkey -e
 alias cp="cp -i"
@@ -43,6 +45,7 @@ alias nvi="nvr -s"
 #alias nv="nvim"
 alias vi="nvim"
 
+
 # -------------------- env vars --------------------------
 # neovim
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
@@ -51,6 +54,10 @@ export EDITOR=nvim
 # fzf
 export FZF_BASE=~/.fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# python
+export PYTHONPATH=~/Developer/dotfiles/python:$PYTHONPATH
+
 
 # -------------------- user config --------------------------
 source ~/.zshrc-var
