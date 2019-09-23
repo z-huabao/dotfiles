@@ -361,6 +361,8 @@ nnoremap <silent> <Esc>z :ZoomToggle<CR>
 tnoremap <silent> <Esc>z <C-\><C-n>:ZoomToggle<CR>
 
 " window split/vsplit
+set splitbelow
+set splitright
 nnoremap <silent> <Esc>s <C-w>s:terminal<CR>
 nnoremap <silent> <Esc>v <C-w>v:terminal<CR>
 nnoremap <silent> <Esc>- <C-w>s:RangerCurrentDirectory<CR>
