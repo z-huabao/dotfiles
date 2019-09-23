@@ -55,8 +55,9 @@ vfile=~/.zshrc-var
 if [ ! -f "$vfile" ]; then
     echo '# Please copy env Paths from ~/.bashrc to ~/.zshrc-var' > $vfile
     vi -O ~/.bashrc ~/.zshrc-var
+    chmod 777 $vfile
 else
-    echo File $vfile has exists!
+    echo File $vfile exist!
 fi
 
 
@@ -76,7 +77,7 @@ echo '#-------------------------- neovim -----------------------------'
 add_ppa neovim-ppa/stable
 sudo apt install -y neovim
 sudo apt purge -y vim vim-gnome
-sudo pip3 install --user jedi
+pip3 install --user jedi, neovim
 
 mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r ~/.config/nvim

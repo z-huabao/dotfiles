@@ -14,11 +14,6 @@ set mouse=a		          " 允许使用鼠标
 set number 	              " 设置行号
 set relativenumber 	      " 设置相对行号
 "set vbs=4                 " 日志verbose
-autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
-autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
-autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
-    \ | exe "normal! g'\"" | endif       " 打开文件时始终跳转到上次光标所在位置
 
 
 """"""""""""""""""""""PLUGINS""""""""""""""""""""
@@ -308,8 +303,7 @@ endfunc
 tnoremap <Esc> <C-\><C-n><C-w>
 tnoremap <Esc><Esc> <C-\><C-n>
 
-func! TermModeMap()
-    " keymaps expecially ranger.vim is different in terminal-normal-mode
+func! SetTermMap()
     set nonumber
     set norelativenumber
     nnoremap <buffer> q i
@@ -317,15 +311,27 @@ func! TermModeMap()
     nnoremap <buffer> <Esc>\ <C-w>v:RangerWorkingDirectory<CR>
     nnoremap <buffer> <Leader>r <C-\><C-n>:RangerWorkingDirectory<CR>
     startinsert
+    if expand("%") =~ "ranger"
+        tnoremap <buffer> <Esc> <Esc><C-\><C-n><C-w>
+        tnoremap <buffer> <Esc><Esc> <Esc><C-\><C-n>
+    endif
 endfunc
-autocmd BufEnter,TermOpen term://** call TermModeMap()
 
-func! RangerMap()
-    " press <Esc> before leave terminal-mode in ranger.vim
-    tnoremap <buffer> <Esc> <Esc><C-\><C-n><C-w>
-    tnoremap <buffer> <Esc><Esc> <Esc><C-\><C-n>
+func! PreOpenFile()
+    set number
+    set relativenumber
+    if line("'\"") > 1 && line("'\"") < line("$")
+        " 打开文件时始终跳转到上次光标所在位置
+        exe "normal! g'\""
+    endif
 endfunc
-autocmd BufEnter,TermOpen term://*ranger* call RangerMap()
+
+autocmd BufEnter,TermOpen term://** call SetTermMap()
+autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
+autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
+autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
+autocmd BufReadPost * call PreOpenFile()
+"autocmd BufEnter,TermOpen term://*ranger* call RangerMap()
 
 
 """""""""""""""""""""""""WINDOW MANAGER""""""""""""""""""""
