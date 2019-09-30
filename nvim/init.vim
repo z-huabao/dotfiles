@@ -3,6 +3,7 @@
 set noswapfile
 set t_Co=256
 set autoindent		      " 缩进
+set shiftround
 set shiftwidth=4
 set expandtab             " 填充Tab
 set fdm=indent   	      " 代码折叠，光标在缩进下方时用za命令折叠或展开这块代码
