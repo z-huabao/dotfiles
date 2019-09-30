@@ -313,7 +313,7 @@ func! SetTermMap()
     startinsert
     if expand("%") =~ "ranger"
         tnoremap <buffer> <Esc> <Esc><C-\><C-n><C-w>
-        tnoremap <buffer> <Esc><Esc> <Esc><C-\><C-n>
+        tnoremap <buffer> <Esc><Esc> <Esc>
     endif
 endfunc
 
