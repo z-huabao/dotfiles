@@ -77,7 +77,7 @@ echo '#-------------------------- neovim -----------------------------'
 add_ppa neovim-ppa/stable
 sudo apt install -y neovim
 sudo apt purge -y vim vim-gnome
-pip3 install --user jedi, neovim
+pip3 install --user jedi neovim
 
 mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r ~/.config/nvim

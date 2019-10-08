@@ -2,7 +2,7 @@
 
 xhost +
 
-count=`ps -ef |grep xkey |grep -v "grep" |wc -l`
+count=`ps -ef |grep xkeysnail/xkeysrc.py |grep -v "grep" |wc -l`
 
 if [ 0 == $count ];then
     echo -e "\nStart to run xkeysnail\n"

@@ -1,4 +1,3 @@
-""""""""""""""""""""""BASE SETTING""""""""""""""""""""
 "language messages zh_CN.utf-8            " 解决consle输出乱码
 set noswapfile
 set t_Co=256
@@ -9,6 +8,7 @@ set expandtab             " 填充Tab
 set fdm=indent   	      " 代码折叠，光标在缩进下方时用za命令折叠或展开这块代码
 set foldlevel=3 	      " 默认展开3层，zm全部折叠一层，zr全部展开一层，zn全部展开
 set cursorline            " 高亮光标行
+set ignorecase
 set autoread              " 文件修改之后自动载入
 set autowrite		      " :next, :make 命令之前自动保存
 set mouse=a		          " 允许使用鼠标
@@ -168,16 +168,22 @@ let g:autoformat_remove_trailing_spaces = 0
 nnoremap <F6> :Autoformat<CR>
 
 " send code to ipython to run
-Plug 'jpalardy/vim-slime'
-let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
-let g:slime_python_ipython = 1
-xmap <Leader>ss <Plug>SlimeRegionSend
-nmap <Leader>ss <Plug>SlimeParagraphSend
-nmap <Leader>v  <Plug>SlimeConfig
+"Plug 'z-huabao/vim-slime'
+"let g:slime_target = "neovim"
+"let g:slime_python_ipython = 1
+"let g:slime_default_config = {"socket_name": "default", "target_pane": "{bottom-of}"}
+"let g:slime_dont_ask_default = 1
+"let g:slime_no_mappings = 1
+"xmap <Leader>ss <Plug>SlimeRegionSend
+"nmap <Leader>ss <Plug>SlimeParagraphSend
+"nmap <Leader>v  <Plug>SlimeConfig
+
+Plug 'z-huabao/vim-submode'
+
+Plug 'z-huabao/vim-slime-ipython'
+let g:slime_ipython_no_mappings = 1
 
 call plug#end()
-
 
 """"""""""""""""""""""SELF DEFINE"""""""""""""""""""""""
 colorscheme molokai
@@ -185,19 +191,15 @@ colorscheme molokai
 " 切换行号显示
 nnoremap <F2> :set nonu!<CR>:set relativenumber!<CR>
 
-" quick leave quickfix
-autocmd BufWinEnter * if &buftype=='quickfix' | nmap <buffer> q <A-q> | endif
-autocmd BufLeave * if &buftype=='quickfix' | q | endif
-
 " search selected word
-func! SearchSelected()
+function! SearchSelected()
     let [lnum1, col1] = getpos("'<")[1:2]
     let [lnum2, col2] = getpos("'>")[1:2]
     let lines = getline(lnum1, lnum2)
     let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][col1 - 1:]
     let @/ = join(lines, "\n")
-endfunc
+endfunction
 vnoremap <silent> * :call SearchSelected()<CR>nn
 vnoremap <silent> # :call SearchSelected()<CR>N
 
@@ -252,16 +254,22 @@ nnoremap Y y$
 " upper, lower case recent text
 nnoremap <Leader>u gu'[
 nnoremap <Leader>U gU'[
+nnoremap <Leader>` viw~
 
-autocmd FileType python nnoremap <buffer> dip Oimport ipdb; ipdb.set_trace()<C-[>
+" edit and source vimrc
+nnoremap <Leader>ev :split $MYVIMRC<CR>
+nnoremap <Leader>sv :source $MYVIMRC<CR>
+
+":iabbrev @@ z_huabao@163.com
+":iabbrev ccopy Copyright 2019 z-huabao, all rights reserved.
 
 " emoji
 inoremap <C-e> <C-X><C-U>
 
 " 运行脚本
 nmap <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-    exec "w"
+function! CompileRunGcc()
+    execute "w"
     if &filetype == 'c'
         :call RunCpp
     elseif &filetype == 'h'
@@ -271,40 +279,39 @@ func! CompileRunGcc()
     elseif &filetype == 'hpp'
         :call RunCpp
     elseif &filetype == 'java'
-        exec "!javac %"
-        exec "!time java %<"
+        execute "!javac %"
+        execute "!time java %<"
     elseif &filetype == 'sh'
-        exec "!time bash %"
+        execute "!time bash %"
     elseif &filetype == 'python'
         :call RunPython()
     elseif &filetype == 'html'
-        exec "!google-chrome % &"
+        execute "!google-chrome % &"
     elseif &filetype == 'js'
-        exec "!time gjs-console %"
+        execute "!time gjs-console %"
     elseif &filetype == 'go'
-        exec "!go build %<"
-        exec "!time go run %"
+        execute "!go build %<"
+        execute "!time go run %"
     endif
     return ''
-endfunc
+endfunction
 
-func! RunCpp()
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
+function! RunCpp()
+    execute "!g++ % -o %<"
+    execute "!time ./%<"
     ":cw
-endfunc
+endfunction
 
-func! RunPython()
+function! RunPython()
     let vpy = search('python3', 'n') ? 3 : 2
-    exec '!time python'.vpy.' %'
-endfunc
+    execute '!time python'.vpy.' %'
+endfunction
 
 
 """""""""""""""""""""""""TERMINAL MODE""""""""""""""""""""
-tnoremap <Esc> <C-\><C-n><C-w>
 tnoremap <Esc><Esc> <C-\><C-n>
 
-func! SetTermMap()
+function! SetTermMap()
     set nonumber
     set norelativenumber
     nnoremap <buffer> q i
@@ -314,48 +321,75 @@ func! SetTermMap()
     startinsert
     if expand("%") =~ "ranger"
         tnoremap <buffer> <Esc> <Esc><C-\><C-n><C-w>
+        tnoremap <buffer> <Esc>p <Esc><C-\><C-n><C-w><C-p>
         tnoremap <buffer> <Esc><Esc> <Esc>
     endif
-endfunc
+endfunction
 
-func! PreOpenFile()
+function! PreOpenFile()
     set number
     set relativenumber
     if line("'\"") > 1 && line("'\"") < line("$")
         " 打开文件时始终跳转到上次光标所在位置
-        exe "normal! g'\""
+        execute "normal! g'\""
     endif
-endfunc
+endfunction
 
-autocmd BufEnter,TermOpen term://** call SetTermMap()
-autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
-autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
-autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
-autocmd BufReadPost * call PreOpenFile()
-"autocmd BufEnter,TermOpen term://*ranger* call RangerMap()
+augroup buffer_enter
+    autocmd!
+    autocmd BufEnter,TermOpen term://** call SetTermMap()
+    autocmd BufReadPost * call PreOpenFile()
+    "autocmd BufEnter,TermOpen term://*ranger* call RangerMap()
 
+    autocmd FileType python nnoremap <buffer> dip Oimport ipdb; ipdb.set_trace()<C-[>
+augroup endgroup
+
+augroup buffer_leave
+    autocmd!
+    autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
+    autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
+    autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
+
+    " quick leave quickfix
+    autocmd BufWinEnter * if &buftype=='quickfix' | nmap <buffer> q <A-q> | endif
+    autocmd BufLeave * if &buftype=='quickfix' | q | endif
+augroup end
 
 """""""""""""""""""""""""WINDOW MANAGER""""""""""""""""""""
-func! s:ZoomToggle() abort
+function! s:RestoreWindow()
+    execute t:zoom_winrestcmd
+    let t:zoomed = 0
+endfunction
+
+function! s:MaximumWindow()
+    let t:zoomed = 1
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+endfunction
+
+function! s:ZoomToggle() abort
     " Zoom / Restore window.
     if exists('t:zoomed') && t:zoomed
-        execute t:zoom_winrestcmd
-        let t:zoomed = 0
+        call s:RestoreWindow()
     else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
+        call s:MaximumWindow()
+        autocmd BufLeave <buffer> call s:RestoreWindow()
     endif
-endfunc
+endfunction
 command! ZoomToggle call s:ZoomToggle()
 
 " window mode
 nnoremap <Esc> <C-w>
+tnoremap <Esc> <C-\><C-n><C-w>
 
 " window close
 nnoremap <silent> <A-q> :q<CR>
 tnoremap <silent> <A-q> <C-\><C-n>:q<CR>
+
+" window previous window
+nnoremap <silent> <Esc>p <C-w><C-p>
+tnoremap <silent> <Esc>p <C-\><C-n><C-w><C-p>
 
 " window maximum
 nnoremap <silent> <Esc>z :ZoomToggle<CR>
@@ -407,5 +441,10 @@ endfor
 
 " Go to last active tab
 autocmd TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <Esc>b :exe "tabn ".g:lasttab<cr>
-tnoremap <silent> <Esc>b <C-\><C-n>:exe "tabn ".g:lasttab<cr>
+nnoremap <silent> <Esc>b :execute "tabn ".g:lasttab<cr>
+tnoremap <silent> <Esc>b <C-\><C-n>:execute "tabn ".g:lasttab<cr>
+
+" neovim slime
+"let data = getline(l1, l2)
+"
+
