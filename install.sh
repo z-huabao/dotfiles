@@ -37,7 +37,8 @@ sudo apt -y install software-properties-common
 
 echo
 echo '#-------------------------- zsh -----------------------------'
-sudo apt install -y zsh zsh-antigen trash-cli lua5.2
+sudo apt install -y zsh zsh-antigen lua5.2
+easy_install trash-cli
 mkdir -p -m 777 $plug_dir/antigen/ $plug_dir/antigen/bundles
 
 antigen_pkg=$plug_dir/antigen/antigen.zsh
@@ -76,6 +77,7 @@ echo
 echo '#-------------------------- neovim -----------------------------'
 add_ppa neovim-ppa/stable
 sudo apt install -y neovim nodejs
+sudo apt install -y npm
 sudo apt purge -y vim vim-gnome
 pip3 install --user neovim jedi pylint
 curl -sL install-node.now.sh | sh
@@ -126,7 +128,7 @@ else
     echo File $xfile has exists!
 fi
 
-
+sudo chmod -R 777 $plug_dir
 
 echo
 echo '#-------------------------- finish -----------------------------'
