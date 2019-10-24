@@ -75,9 +75,10 @@ ln -s -f $dotf_dir/tmux/tmux.conf ~/.tmux.conf
 echo
 echo '#-------------------------- neovim -----------------------------'
 add_ppa neovim-ppa/stable
-sudo apt install -y neovim
+sudo apt install -y neovim nodejs
 sudo apt purge -y vim vim-gnome
-pip3 install --user jedi neovim
+pip3 install --user neovim jedi pylint
+curl -sL install-node.now.sh | sh
 
 mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r ~/.config/nvim
@@ -91,6 +92,7 @@ if [ ! -f $vim_plug ]; then
 fi
 
 nvim +PlugInstall +qall
+#nvim +CocCommand python.setInterpreter
 
 
 echo

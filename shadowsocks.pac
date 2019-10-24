@@ -5,6 +5,8 @@
 var proxy = "SOCKS5 127.0.0.1:1080;";
 
 var domains = {
+  "www.unknowncheats.me": 1,
+  "pirsquared.org": 1,
   "www.rrcc.edu": 1,
   "hub.docker.com": 1,
   "extensions.gnome.org": 1,

@@ -1,5 +1,5 @@
 "language messages zh_CN.utf-8            " 解决consle输出乱码
-set noswapfile
+"set noswapfile
 set t_Co=256
 set autoindent		      " 缩进
 set shiftround
@@ -83,7 +83,7 @@ nmap <silent> <F8> <Plug>StopMarkdownPreview
 
 " (显示大纲)over view code
 Plug 'majutsushi/tagbar'
-nmap <Leader>t :TagbarToggle<CR>
+nmap <F9> :TagbarToggle<CR>
 
 " 查找工程文件
 Plug 'mileszs/ack.vim'
@@ -128,22 +128,35 @@ Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 
 " 跳转到定义
-Plug 'davidhalter/jedi-vim'
-let g:jedi#completions_enabled = 0
-let g:jedi#rename_command = ""
+"Plug 'davidhalter/jedi-vim'
+"let g:jedi#completions_enabled = 0
+"let g:jedi#rename_command = ""
 
 " 自动补全
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-pyclang'
-Plug 'ncm2/ncm2-ultisnips'
-set completeopt=noinsert,menuone,noselect
-autocmd BufEnter * call ncm2#enable_for_buffer()
+"Plug 'roxma/nvim-yarp'
+"Plug 'ncm2/ncm2'
+"Plug 'ncm2/ncm2-path'
+"Plug 'ncm2/ncm2-bufword'
+"Plug 'ncm2/ncm2-jedi'
+"Plug 'ncm2/ncm2-pyclang'
+"Plug 'ncm2/ncm2-ultisnips'
+"set completeopt=noinsert,menuone,noselect
+"autocmd BufEnter * call ncm2#enable_for_buffer()
 
-" 常用补全
+" 自动补全, 跳转到定义
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+    let isdoc = index(['vim','help'], &filetype) >= 0
+    execute isdoc ? 'h '.expand('<cword>') : 'call CocAction("doHover")'
+endfunction
+
+" 常用短语补全
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
@@ -168,20 +181,9 @@ let g:autoformat_remove_trailing_spaces = 0
 nnoremap <F6> :Autoformat<CR>
 
 " send code to ipython to run
-"Plug 'z-huabao/vim-slime'
-"let g:slime_target = "neovim"
-"let g:slime_python_ipython = 1
-"let g:slime_default_config = {"socket_name": "default", "target_pane": "{bottom-of}"}
-"let g:slime_dont_ask_default = 1
-"let g:slime_no_mappings = 1
-"xmap <Leader>ss <Plug>SlimeRegionSend
-"nmap <Leader>ss <Plug>SlimeParagraphSend
-"nmap <Leader>v  <Plug>SlimeConfig
-
 Plug 'z-huabao/vim-submode'
-
 Plug 'z-huabao/vim-slime-ipython'
-let g:slime_ipython_no_mappings = 1
+"let g:slime_ipython_console_layout = {'position': 'right'}
 
 call plug#end()
 
@@ -260,9 +262,6 @@ nnoremap <Leader>` viw~
 nnoremap <Leader>ev :split $MYVIMRC<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
-":iabbrev @@ z_huabao@163.com
-":iabbrev ccopy Copyright 2019 z-huabao, all rights reserved.
-
 " emoji
 inoremap <C-e> <C-X><C-U>
 
@@ -303,7 +302,7 @@ function! RunCpp()
 endfunction
 
 function! RunPython()
-    let vpy = search('python3', 'n') ? 3 : 2
+    let vpy = search('python2', 'n') ? 2 : 3
     execute '!time python'.vpy.' %'
 endfunction
 
@@ -350,9 +349,11 @@ augroup buffer_leave
     autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
     autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
 
-    " quick leave quickfix
-    autocmd BufWinEnter * if &buftype=='quickfix' | nmap <buffer> q <A-q> | endif
-    autocmd BufLeave * if &buftype=='quickfix' | q | endif
+    " quick leaves
+    let s:bufs = ['quickfix', 'help']
+    autocmd BufWinEnter * if index(s:bufs, &buftype)>=0 || bufname('%')=='coc://document'
+                \| nnoremap <buffer> q :q<CR> | endif
+    autocmd BufLeave * if 'quickfix'==&buftype | q | endif
 augroup end
 
 """""""""""""""""""""""""WINDOW MANAGER""""""""""""""""""""
@@ -443,8 +444,3 @@ endfor
 autocmd TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <Esc>b :execute "tabn ".g:lasttab<cr>
 tnoremap <silent> <Esc>b <C-\><C-n>:execute "tabn ".g:lasttab<cr>
-
-" neovim slime
-"let data = getline(l1, l2)
-"
-
