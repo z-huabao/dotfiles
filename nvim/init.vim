@@ -132,22 +132,12 @@ Plug 'terryma/vim-multiple-cursors'
 "let g:jedi#completions_enabled = 0
 "let g:jedi#rename_command = ""
 
-" 自动补全
-"Plug 'roxma/nvim-yarp'
-"Plug 'ncm2/ncm2'
-"Plug 'ncm2/ncm2-path'
-"Plug 'ncm2/ncm2-bufword'
-"Plug 'ncm2/ncm2-jedi'
-"Plug 'ncm2/ncm2-pyclang'
-"Plug 'ncm2/ncm2-ultisnips'
-"set completeopt=noinsert,menuone,noselect
-"autocmd BufEnter * call ncm2#enable_for_buffer()
-
 " 自动补全, 跳转到定义
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-nmap <silent> gd <Plug>(coc-definition)
+" 加条件判断 &modified
+nmap <silent> gd :w<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gi :w<CR><Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -158,14 +148,13 @@ endfunction
 
 " 常用短语补全
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
 " tab 补全
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " 自动补全括号
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 
 " 批量注释 F4
 Plug 'scrooloose/nerdcommenter'
@@ -314,7 +303,7 @@ function! SetTermMap()
     set nonumber
     set norelativenumber
     nnoremap <buffer> q i
-    nnoremap <buffer> <Esc>- <C-w>s:RangerWorkingDirectory<CR>
+    nnoremap <buffer> <Esc>_ <C-w>s:RangerWorkingDirectory<CR>
     nnoremap <buffer> <Esc>\ <C-w>v:RangerWorkingDirectory<CR>
     nnoremap <buffer> <Leader>r <C-\><C-n>:RangerWorkingDirectory<CR>
     startinsert
@@ -336,6 +325,7 @@ endfunction
 
 augroup buffer_enter
     autocmd!
+    execute 'normal! zn'
     autocmd BufEnter,TermOpen term://** call SetTermMap()
     autocmd BufReadPost * call PreOpenFile()
     "autocmd BufEnter,TermOpen term://*ranger* call RangerMap()
@@ -401,11 +391,11 @@ set splitbelow
 set splitright
 nnoremap <silent> <Esc>s <C-w>s:terminal<CR>
 nnoremap <silent> <Esc>v <C-w>v:terminal<CR>
-nnoremap <silent> <Esc>- <C-w>s:RangerCurrentDirectory<CR>
+nnoremap <silent> <Esc>_ <C-w>s:RangerCurrentDirectory<CR>
 nnoremap <silent> <Esc>\| <C-w>v:RangerCurrentDirectory<CR>
 tnoremap <silent> <Esc>s <C-\><C-n><C-w>s:terminal<CR>
 tnoremap <silent> <Esc>v <C-\><C-n><C-w>v:terminal<CR>
-tnoremap <silent> <Esc>- <C-\><C-n><C-w>s:RangerWorkingDirectory<CR>
+tnoremap <silent> <Esc>_ <C-\><C-n><C-w>s:RangerWorkingDirectory<CR>
 tnoremap <silent> <Esc>\| <C-\><C-n><C-w>v:RangerWorkingDirectory<CR>
 
 " window resize
