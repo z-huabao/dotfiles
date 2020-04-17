@@ -11,6 +11,7 @@ dotf_dir=$PWD
 cd ..
 mkdir -p -m 777 plugins && cd plugins
 plug_dir=$PWD
+home_user=$(eval echo ~${SUDO_USER})
 
 add_ppa() {
   count=0
@@ -39,7 +40,7 @@ echo
 echo '#-------------------------- zsh -----------------------------'
 sudo apt install -y zsh zsh-antigen lua5.2
 easy_install trash-cli
-mkdir -p -m 777 $plug_dir/antigen/ $plug_dir/antigen/bundles
+mkdir -p -m 755 $plug_dir/antigen/ $plug_dir/antigen/bundles
 
 antigen_pkg=$plug_dir/antigen/antigen.zsh
 if [ ! -f $antigen_pkg ]; then
@@ -89,6 +90,7 @@ ln -s -f $dotf_dir/nvim/init.vim ~/.config/nvim/init.vim
 
 vim_plug=$plug_dir/nvim/autoload/plug.vim
 if [ ! -f $vim_plug ]; then
+    echo "$vim_plug not exists, get plug.vim ... ..."
     curl -fLo $vim_plug --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
@@ -109,26 +111,33 @@ ln -s -f $dotf_dir/ranger/rc.conf ~/.config/ranger/rc.conf
 echo
 echo '#-------------------------- fzf -----------------------------'
 #sudo apt install -y fzf
-mkdir -p -m 777 $plug_dir/fzf
-git clone https://github.com/junegunn/fzf.git $plug_dir/fzf \
-    && $plug_dir/fzf/install
 
+if [ ! -d $plug_dir/fzf ]; then
+    echo "$plug_dir/fzf not exists, git cloning ... ..."
+    mkdir -p -m 777 $plug_dir/fzf
+    git clone https://github.com/junegunn/fzf.git $plug_dir/fzf \
+        && $plug_dir/fzf/install
+fi
+echo "relink $plug_dir/fzf to ~/.fzf"
 rm -r ~/.fzf
 ln -s -f $plug_dir/fzf ~/.fzf
 
 echo
 echo '#-------------------------- xkeysnail -----------------------------'
 sudo pip3 install --user xkeysnail pyuserinput
-xfile=~/.config/autostart/xkey.desktop
-if [ ! -f "$xfile" ]; then
-    echo Please change username and password in $xfile
+xfile="$home_user/.config/autostart/xkey.desktop"
+if [ ! -f $xfile ]; then
+    echo "Please change username and password in $xfile"
     cp $dotf_dir/xkeysnail/xkey.desktop $xfile
     vi $xfile
 else
-    echo File $xfile has exists!
+    echo File $xfile has exists, do not copy
 fi
 
-sudo chmod -R 777 $plug_dir
+
+chmod -R 777 $plug_dir
+chmod -R 755 $plug_dir/antigen/bundles
+chown -R root:root $plug_dir/antigen/bundles
 
 echo
 echo '#-------------------------- finish -----------------------------'

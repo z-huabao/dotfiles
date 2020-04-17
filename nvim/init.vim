@@ -154,7 +154,7 @@ Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " 自动补全括号
-"Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 
 " 批量注释 F4
 Plug 'scrooloose/nerdcommenter'
