@@ -65,7 +65,7 @@ Plug 'lfv89/vim-interestingwords'
 nnoremap <silent> f<CR> :call InterestingWords('n')<CR>
 vnoremap <silent> f<CR> :call InterestingWords('v')<CR>
 vnoremap <silent> <CR> :call InterestingWords('v')<CR>
-nnoremap <silent> c<CR> :call UncolorAllWords()<CR>
+nnoremap <silent> F<CR> :call UncolorAllWords()<CR>
 nnoremap <silent> n :call WordNavigation('forward')<CR>
 nnoremap <silent> N :call WordNavigation('backward')<CR>
 
@@ -219,6 +219,7 @@ vmap <C-c> "+y
 vmap <C-x> x:let @+=@"<CR>
 
 inoremap <C-v> <ESC>"+pa
+inoremap <A-v> <C-v>
 
 " w!!写入只读文件
 cmap w!! w !sudo tee >/dev/null %:p
@@ -306,7 +307,7 @@ function! SetTermMap()
     nnoremap <buffer> <Esc>_ <C-w>s:RangerWorkingDirectory<CR>
     nnoremap <buffer> <Esc>\ <C-w>v:RangerWorkingDirectory<CR>
     nnoremap <buffer> <Leader>r <C-\><C-n>:RangerWorkingDirectory<CR>
-    startinsert
+    "startinsert
     if expand("%") =~ "ranger"
         tnoremap <buffer> <Esc> <Esc><C-\><C-n><C-w>
         tnoremap <buffer> <Esc>p <Esc><C-\><C-n><C-w><C-p>
@@ -370,8 +371,18 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 
+function! CheckMode()
+    let b:is_insert_mode = mode() == 'i'
+    echo b:is_insert_mode
+endfunction
+"command! CheckMode call s:CheckMode()
+
 " window mode
+"noremap <expr> <Esc> let b:is_insert_mode = 1
+"map <expr> <Esc> CheckMode()
+
 nnoremap <Esc> <C-w>
+"inoremap <Esc> <C-\><C-n><C-w>
 tnoremap <Esc> <C-\><C-n><C-w>
 
 " window close
