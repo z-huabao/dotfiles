@@ -5,6 +5,7 @@
 var proxy = "SOCKS5 127.0.0.1:1080;";
 
 var domains = {
+  "extensions.gnome.org/extension": 1,
   "www.gamedev.net": 1,
   "www.unknowncheats.me": 1,
   "pirsquared.org": 1,

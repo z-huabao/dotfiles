@@ -1,4 +1,4 @@
-source ~/Developer/plugins/antigen/antigen.zsh
+source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh                           # 加载oh-my-zsh库
 antigen theme robbyrussell                      # 加载主题
 
@@ -42,7 +42,6 @@ alias ndocker="nvidia-docker"
 
 # neovim
 alias nvi="nvr -s"
-#alias nv="nvim"
 alias vi="nvim"
 
 

@@ -134,6 +134,7 @@ Plug 'terryma/vim-multiple-cursors'
 
 " 自动补全, 跳转到定义
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_disable_startup_warning = 1
 " 加条件判断 &modified
 nmap <silent> gd :w<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
