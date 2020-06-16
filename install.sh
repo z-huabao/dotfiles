@@ -79,13 +79,6 @@ ln -s -f $dotf_dir/tmux/tmux.conf $home/.tmux.conf
 
 echo
 echo '#-------------------------- neovim -----------------------------'
-#add_ppa neovim-ppa/stable
-#if [ ! -f "/usr/local/bin/nvim" ]; then
-    #wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage \
-                #-O /usr/local/bin/nvim
-#fi
-#sudo chmod +x /usr/local/bin/nvim
-#sudo ln -s /usr/local/bin/nvim /usr/local/bin/vi
 sudo apt install -y neovim
 
 # pip3 install --user neovim jedi pylint
@@ -98,6 +91,7 @@ mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r $home/.config/nvim
 ln -s -f $plug_dir/nvim $home/.config/nvim
 ln -s -f $dotf_dir/nvim/init.vim $home/.config/nvim/init.vim
+ln -s -f $dotf_dir/nvim/init.vim $home/.ideavimrc
 
 vim_plug=$plug_dir/nvim/autoload/plug.vim
 if [ ! -f $vim_plug ]; then
