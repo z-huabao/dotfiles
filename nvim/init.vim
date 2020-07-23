@@ -116,6 +116,14 @@ let g:ranger_map_keys = 0
 nnoremap <silent> <Leader>r :RangerCurrentDirectory<CR>
 tnoremap <silent> <Esc><Leader>r <C-\><C-n>:RangerWorkingDirectory<CR>
 
+Plug 'kevinhwang91/rnvimr'
+let g:rnvimr_draw_border = 0
+let g:rnvimr_ranger_cmd = 'ranger --cmd="set draw_borders both"'
+highlight link RnvimrNormal CursorLine
+nnoremap <silent> <M-o> :RnvimrToggle<CR>
+tnoremap <silent> <M-o> <C-\><C-n>:RnvimrToggle<CR>
+tnoremap <silent> <M-=> <C-\><C-n>:RnvimrResize<CR>
+
 " 对齐文本
 Plug 'junegunn/vim-easy-align'
 xmap ta <Plug>(EasyAlign)

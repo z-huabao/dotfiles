@@ -91,7 +91,7 @@ mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r $home/.config/nvim
 ln -s -f $plug_dir/nvim $home/.config/nvim
 ln -s -f $dotf_dir/nvim/init.vim $home/.config/nvim/init.vim
-ln -s -f $dotf_dir/nvim/init.vim $home/.ideavimrc
+ln -s -f $dotf_dir/nvim/ideavimrc $home/.ideavimrc
 
 vim_plug=$plug_dir/nvim/autoload/plug.vim
 if [ ! -f $vim_plug ]; then
