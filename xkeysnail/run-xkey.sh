@@ -24,3 +24,6 @@ echo -e "\nFinish!\n"
 # 创建密码文件 ~/_PWD_TEMP_, 写入如下内容并添加可执行权限
 # #!/usr/bin/env bash
 # echo password
+
+
+pkill snap-store

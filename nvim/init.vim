@@ -11,9 +11,9 @@ set cursorline            " 高亮光标行
 set ignorecase
 set autoread              " 文件修改之后自动载入
 set autowrite		      " :next, :make 命令之前自动保存
-set mouse=a		          " 允许使用鼠标
 set number 	              " 设置行号
 set relativenumber 	      " 设置相对行号
+"set mouse=a		          " 允许使用鼠标
 "set vbs=4                 " 日志verbose
 
 
@@ -56,6 +56,7 @@ let g:indentLine_enabled = 1
 " 不同颜色匹配括号
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
+let loaded_matchparen=1
 
 " bottom-light curosr word
 Plug 'itchyny/vim-cursorword'
@@ -75,11 +76,10 @@ nmap mn ]'
 nmap mN ['
 
 " markdown预览
-Plug 'iamcco/markdown-preview.vim'
-let g:mkdp_path_to_chrome='google-chrome'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 let g:mkdp_auto_close=0
 nmap <silent> <F7> <Plug>MarkdownPreview
-nmap <silent> <F8> <Plug>StopMarkdownPreview
+nmap <silent> <F8> <Plug>MarkdownPreviewStop
 
 " (显示大纲)over view code
 Plug 'majutsushi/tagbar'
@@ -130,10 +130,10 @@ xmap ta <Plug>(EasyAlign)
 nmap ta <Plug>(EasyAlign)<Space>
 
 " 括号等字符处理
-Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
 
 " multi corsors edit
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
 
 " 跳转到定义
 "Plug 'davidhalter/jedi-vim'

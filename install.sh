@@ -50,7 +50,7 @@ if [ ! -f $antigen_pkg ]; then
 fi
 
 # use zsh as default shell
-chsh -s /bin/zsh
+chsh -s `which zsh`
 
 rm -r $home/.antigen
 ln -s -f $plug_dir/antigen $home/.antigen
@@ -60,7 +60,7 @@ vfile=$home/.zshrc-var
 if [ ! -f "$vfile" ]; then
     echo '# Please copy env Paths from ~/.bashrc to ~/.zshrc-var' > $vfile
     sudo -u $uname vi -O $home/.bashrc $home/.zshrc-var
-#    chmod 777 $vfile
+    chmod 766 $vfile
 else
     echo File $vfile exist!
 fi
@@ -92,6 +92,7 @@ rm -r $home/.config/nvim
 ln -s -f $plug_dir/nvim $home/.config/nvim
 ln -s -f $dotf_dir/nvim/init.vim $home/.config/nvim/init.vim
 ln -s -f $dotf_dir/nvim/ideavimrc $home/.ideavimrc
+ln -s -f $dotf_dir/nvim/vrapperrc $home/.vrapperrc
 
 vim_plug=$plug_dir/nvim/autoload/plug.vim
 if [ ! -f $vim_plug ]; then
@@ -129,7 +130,7 @@ ln -s -f $plug_dir/fzf $home/.fzf
 
 echo
 echo '#-------------------------- xkeysnail -----------------------------'
-sudo pip3 install --user xkeysnail pyuserinput
+sudo pip3 install xkeysnail pyuserinput
 xfile="$home/.config/autostart/xkey.desktop"
 if [ ! -f $xfile ]; then
     echo "Please change uname and password in $xfile"
