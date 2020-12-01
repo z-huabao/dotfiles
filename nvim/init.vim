@@ -223,9 +223,9 @@ nnoremap <C-l> <C-i>
 " normal模式下Ctrl+c全选并复制到系统剪贴板(linux必须装有vim-gnome)
 " visual模式下Ctrl+c复制、ctrl+x剪切选中内容到剪贴板
 " Ctrl+v原样粘贴剪切板内容
-nmap <C-c> gg"+yG
-vmap <C-c> "+y
-vmap <C-x> x:let @+=@"<CR>
+nnoremap <C-c> gg"+yG<C-o>
+vnoremap <C-c> "+y
+vnoremap <C-x> x:let @+=@"<CR>
 
 inoremap <C-v> <ESC>"+pa
 inoremap <A-v> <C-v>
