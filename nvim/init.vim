@@ -356,6 +356,12 @@ augroup buffer_leave
     autocmd BufLeave * if 'quickfix'==&buftype | q | endif
 augroup end
 
+augroup autosave
+    autocmd!
+    autocmd BufRead * if &filetype == "" | setlocal ft=text | endif
+    autocmd FileType * autocmd TextChanged,InsertLeave <buffer> if &readonly == 0 | silent write | endif
+augroup END
+
 """""""""""""""""""""""""WINDOW MANAGER""""""""""""""""""""
 function! s:RestoreWindow()
     execute t:zoom_winrestcmd
