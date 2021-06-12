@@ -13,6 +13,7 @@ set autoread              " 文件修改之后自动载入
 set autowrite		      " :next, :make 命令之前自动保存
 set number 	              " 设置行号
 set relativenumber 	      " 设置相对行号
+set path+=/home/zhb/include
 "set mouse=a		          " 允许使用鼠标
 "set vbs=4                 " 日志verbose
 
@@ -31,8 +32,21 @@ endif
 
 " 状态栏
 Plug 'itchyny/lightline.vim'
-let g:lightline = {'colorscheme': 'one'}
+set noshowmode
 set laststatus=2          " 状态栏配置
+let g:lightline = {'colorscheme': 'one', 'component_function': {'filename': 'LightLineFilename'}}
+function! LightLineFilename()
+    let subs = split(expand('%f'), "/")
+    if expand('%f')[0] == '/' | let name = "" | else | let name = "." | endif
+    for i in range(len(subs))
+        let s = subs[i]
+        if i > 0 && i < len(subs) - 1 && len(s) > 5
+            let s = s[0:2] . '*'
+        endif
+        let name = name . '/' . s
+    endfor
+    return name
+endfunction
 
 " json file
 Plug 'elzr/vim-json'
@@ -82,7 +96,8 @@ nmap <silent> <F7> <Plug>MarkdownPreview
 nmap <silent> <F8> <Plug>MarkdownPreviewStop
 
 " (显示大纲)over view code
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', {'do': 'sudo apt install ctags'}
+let g:tagbar_autofocus = 1
 nmap <F9> :TagbarToggle<CR>
 
 " 查找工程文件
@@ -129,10 +144,10 @@ Plug 'junegunn/vim-easy-align'
 xmap ta <Plug>(EasyAlign)
 nmap ta <Plug>(EasyAlign)<Space>
 
-" 括号等字符处理
+" 括号高亮匹配
 "Plug 'tpope/vim-surround'
 
-" multi corsors edit
+" 多选同时编辑
 "Plug 'terryma/vim-multiple-cursors'
 
 " 跳转到定义
@@ -143,24 +158,38 @@ nmap ta <Plug>(EasyAlign)<Space>
 " 自动补全, 跳转到定义
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_disable_startup_warning = 1
-" 加条件判断 &modified
-nmap <silent> gd :w<CR><Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi :w<CR><Plug>(coc-implementation)
+nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" Use K to show documentation in preview window
+nnoremap <leader>d :CocDiagnostic<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
     let isdoc = index(['vim','help'], &filetype) >= 0
     execute isdoc ? 'h '.expand('<cword>') : 'call CocAction("doHover")'
 endfunction
+" coc plugins:
+" coc-clangd, coc-json, coc-sh
+" coc-pyright
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv',
+    \ 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
+" coc-snippets
+let g:coc_snippet_next = '<right>'
+let g:coc_snippet_prev = '<left>'
+inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>\<Down>\<Up>" :
+        \ <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+inoremap <silent><expr> <S-TAB>
+        \ pumvisible() ? "\<C-p>\<Down>\<Up>" :
+        \ <SID>check_back_space() ? "\<S-TAB>" : coc#refresh()
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
 " 常用短语补全
-Plug 'SirVer/ultisnips'
-
-" tab 补全
-Plug 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "<c-n>"
+"Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " 自动补全括号
 Plug 'jiangmiao/auto-pairs'
@@ -178,15 +207,33 @@ let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 nnoremap <F6> :Autoformat<CR>
 
+" auto save
+Plug '907th/vim-auto-save'
+let g:auto_save = 1
+" 手动保存文件时删除行尾空格或Tab
+cnoremap w<CR> %s/^$\n\+\%$//ge<CR>:%s/\s\+$//e<CR>:w<CR>
+
+" search功能强化，%s替换智能化
+Plug 'osyo-manga/vim-over'
+nnoremap <silent> ? :OverCommandLine<CR>/
+
 " send code to ipython to run
-Plug 'z-huabao/vim-submode'
-Plug 'z-huabao/vim-slime-ipython'
+"Plug 'z-huabao/vim-submode'
+"Plug 'z-huabao/vim-slime-ipython'
 "let g:slime_ipython_console_layout = {'position': 'right'}
 
 call plug#end()
 
 """"""""""""""""""""""SELF DEFINE"""""""""""""""""""""""
 colorscheme molokai
+
+" edit and source vimrc
+nnoremap <Leader>ev :split $MYVIMRC<CR>
+nnoremap <Leader>sv :source $MYVIMRC<CR>
+
+" 替换原有的记录命令功能，因为基本用不上
+nnoremap <Leader>q q
+nnoremap q :q
 
 " 切换行号显示
 nnoremap <F2> :set nonu!<CR>:set relativenumber!<CR>
@@ -203,14 +250,21 @@ endfunction
 vnoremap <silent> * :call SearchSelected()<CR>nn
 vnoremap <silent> # :call SearchSelected()<CR>N
 
+function! CheckLine()
+    let diff = winheight('%') - (line('$') - line('w0')) - 1
+    if diff > 0
+        execute 'normal '.diff.''
+    endif
+endfunction
+
 " 空格翻页
-nnoremap <Space> <C-f>
+nnoremap <silent> <Space> <C-f>:call CheckLine()<CR>
 nnoremap <Backspace> <C-b>
 vnoremap <Space> <C-f>
 vnoremap <Backspace> <C-b>
 
 " 滚动
-nnoremap <Down> 4<C-e>
+nnoremap <silent> <Down> 4<C-e>:call CheckLine()<CR>
 nnoremap <Up> 4<C-y>
 nnoremap <Left> F<Space>h
 nnoremap <Right> f<Space>l
@@ -252,17 +306,12 @@ vnoremap <S-tab> <gv
 " Shift+y copy to end of current line
 nnoremap Y y$
 
-" upper, lower case recent text
+" upper, lower case recent text or cursor word
 nnoremap <Leader>u gu'[
 nnoremap <Leader>U gU'[
-nnoremap <Leader>` viw~
-
-" edit and source vimrc
-nnoremap <Leader>ev :split $MYVIMRC<CR>
-nnoremap <Leader>sv :source $MYVIMRC<CR>
-
-" emoji
-inoremap <C-e> <C-X><C-U>
+nnoremap gu viwgu
+nnoremap gU viwgU
+nnoremap g` viw~
 
 " 运行脚本
 nmap <F5> :call CompileRunGcc()<CR>
@@ -345,22 +394,16 @@ augroup endgroup
 
 augroup buffer_leave
     autocmd!
-    autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
-    autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
-    autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
+    "autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
+    "autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
+    "autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
 
     " quick leaves
     let s:bufs = ['quickfix', 'help']
     autocmd BufWinEnter * if index(s:bufs, &buftype)>=0 || bufname('%')=='coc://document'
                 \| nnoremap <buffer> q :q<CR> | endif
-    autocmd BufLeave * if 'quickfix'==&buftype | q | endif
+    "autocmd BufLeave * if 'quickfix'==&buftype | q | endif
 augroup end
-
-augroup autosave
-    autocmd!
-    autocmd BufRead * if &filetype == "" | setlocal ft=text | endif
-    autocmd FileType * autocmd TextChanged,InsertLeave <buffer> if &readonly == 0 | silent write | endif
-augroup END
 
 """""""""""""""""""""""""WINDOW MANAGER""""""""""""""""""""
 function! s:RestoreWindow()
@@ -460,3 +503,4 @@ endfor
 autocmd TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <Esc>b :execute "tabn ".g:lasttab<cr>
 tnoremap <silent> <Esc>b <C-\><C-n>:execute "tabn ".g:lasttab<cr>
+
