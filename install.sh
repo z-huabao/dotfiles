@@ -91,6 +91,7 @@ mkdir -p -m 777 $plug_dir/nvim/ $plug_dir/nvim/plugins $plug_dir/nvim/autoload
 rm -r $home/.config/nvim
 ln -s -f $plug_dir/nvim $home/.config/nvim
 ln -s -f $dotf_dir/nvim/init.vim $home/.config/nvim/init.vim
+ln -s -f $dotf_dir/nvim/coc-settings.json $home/.config/nvim/coc-settings.json
 ln -s -f $dotf_dir/nvim/ideavimrc $home/.ideavimrc
 ln -s -f $dotf_dir/nvim/vrapperrc $home/.vrapperrc
 
