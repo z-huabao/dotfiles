@@ -55,7 +55,7 @@ export FZF_BASE=~/.fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # python
-export PYTHONPATH=~/Developer/dotfiles/python:$PYTHONPATH
+#export PYTHONPATH=~/Developer/dotfiles/python:$PYTHONPATH
 
 
 # -------------------- user config --------------------------

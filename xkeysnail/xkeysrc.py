@@ -3,7 +3,8 @@
     sudo pip3 install xkeysnail
     sudo xkeysnail ~/.xkeysrc.py
 """
-from xkeysnail.transform import *
+import re
+from xkeysnail.transform import define_keymap, K
 from pykeyboard import PyKeyboard
 
 # open numlock key
@@ -42,7 +43,24 @@ define_keymap(None, {
 }, "quick move")
 
 define_keymap(None, {
+    # capslock to escape
     K("CAPSLOCK"): K("ESC"),
     K("Alt-CAPSLOCK"): K("Alt-ESC"),
 }, "caps->esc")
 
+define_keymap(re.compile("Nautilus"), {
+    # nautilus Ctrl-Tab
+    K("C-TAB"): K("C-Page_Down"),
+    K("C-F4"): K("C-w"),
+    K("C-Shift-TAB"): K("C-Page_Up"),
+}, "nautilus")
+
+define_keymap(re.compile("chrome"), {
+    # nautilus Ctrl-Tab
+    # K("Alt-h"): K("Alt-LEFT"),
+    # K("Alt-j"): K("C-Page_Up"),
+    # K("Alt-k"): K("C-Page_Down"),
+    # K("Alt-l"): K("Alt-RIGHT"),
+    # disable Firefox "alt menu", config on web: 
+    #   about:config?filter=ui.key.menuAccessKeyFocuses = false
+}, "chrome")

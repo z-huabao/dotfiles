@@ -177,10 +177,10 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.ven
 let g:coc_snippet_next = '<right>'
 let g:coc_snippet_prev = '<left>'
 inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>\<Down>\<Up>" :
+        \ pumvisible() ? "\<C-n>" :
         \ <SID>check_back_space() ? "\<TAB>" : coc#refresh()
 inoremap <silent><expr> <S-TAB>
-        \ pumvisible() ? "\<C-p>\<Down>\<Up>" :
+        \ pumvisible() ? "\<C-p>" :
         \ <SID>check_back_space() ? "\<S-TAB>" : coc#refresh()
 function! s:check_back_space() abort
     let col = col('.') - 1
@@ -258,13 +258,13 @@ function! CheckLine()
 endfunction
 
 " 空格翻页
-nnoremap <silent> <Space> <C-f>:call CheckLine()<CR>
+nnoremap <silent> <Space> <C-f>
 nnoremap <Backspace> <C-b>
 vnoremap <Space> <C-f>
 vnoremap <Backspace> <C-b>
 
 " 滚动
-nnoremap <silent> <Down> 4<C-e>:call CheckLine()<CR>
+nnoremap <silent> <Down> 4<C-e>
 nnoremap <Up> 4<C-y>
 nnoremap <Left> F<Space>h
 nnoremap <Right> f<Space>l
@@ -290,8 +290,10 @@ cmap w!! w !sudo tee >/dev/null %:p
 " 给当前单词添加引号
 nnoremap '' viw<esc>a'<esc>hbi'<esc>lel
 nnoremap "" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap `` viw<esc>a`<esc>hbi`<esc>lel
 vnoremap '' c''<Esc>P
 vnoremap "" c""<Esc>P
+vnoremap `` c``<Esc>P
 
 " 缩进文本
 nnoremap > >>
@@ -318,13 +320,13 @@ nmap <F5> :call CompileRunGcc()<CR>
 function! CompileRunGcc()
     execute "w"
     if &filetype == 'c'
-        :call RunCpp
+        :call RunC()
     elseif &filetype == 'h'
-        :call RunCpp
+        :call RunCpp()
     elseif &filetype == 'cpp'
-        :call RunCpp
+        :call RunCpp()
     elseif &filetype == 'hpp'
-        :call RunCpp
+        :call RunCpp()
     elseif &filetype == 'java'
         execute "!javac %"
         execute "!time java %<"
@@ -343,10 +345,14 @@ function! CompileRunGcc()
     return ''
 endfunction
 
+function! RunC()
+    execute "!gcc % -o %< && time ./%<"
+endfunction
+
 function! RunCpp()
-    execute "!g++ % -o %<"
-    execute "!time ./%<"
-    ":cw
+    execute "!g++ % -o %< && time ./%<"
+    "execute "!g++ % -o %<"
+    "execute "!time ./%<"
 endfunction
 
 function! RunPython()
@@ -454,6 +460,7 @@ tnoremap <silent> <Esc>p <C-\><C-n><C-w><C-p>
 " window maximum
 nnoremap <silent> <Esc>z :ZoomToggle<CR>
 tnoremap <silent> <Esc>z <C-\><C-n>:ZoomToggle<CR>
+nmap <silent> <Esc>o <Esc>z
 
 " window split/vsplit
 set splitbelow

@@ -26,4 +26,5 @@ echo -e "\nFinish!\n"
 # echo password
 
 
+pkill gnome-software
 pkill snap-store
