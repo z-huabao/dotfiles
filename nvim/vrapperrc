@@ -28,8 +28,8 @@ vnoremap <Space> <C-f>
 vnoremap <Backspace> <C-b>
 
 " 滚动
-nnoremap <Down> <C-e><C-e><C-e><C-e>
-nnoremap <Up> <C-y><C-y><C-y><C-y>
+nnoremap <Down> <C-e><C-e><C-e><C-e>jjjj
+nnoremap <Up> <C-y><C-y><C-y><C-y>kkkk
 nnoremap <Left> F<Space>h
 nnoremap <Right> f<Space>l
 nnoremap <Home> ^

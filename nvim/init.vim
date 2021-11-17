@@ -1,5 +1,8 @@
-"language messages zh_CN.utf-8            " 解决consle输出乱码
-"set noswapfile
+language messages zh_CN.utf-8            " 解决consle输出乱码
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set noswapfile
 set t_Co=256
 set autoindent		      " 缩进
 set shiftround
@@ -169,8 +172,7 @@ function! s:show_documentation()
     execute isdoc ? 'h '.expand('<cword>') : 'call CocAction("doHover")'
 endfunction
 " coc plugins:
-" coc-clangd, coc-json, coc-sh
-" coc-pyright
+" coc-clangd, coc-json, coc-sh, coc-pyright, coc-snnipets
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv',
     \ 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
 " coc-snippets
@@ -264,8 +266,8 @@ vnoremap <Space> <C-f>
 vnoremap <Backspace> <C-b>
 
 " 滚动
-nnoremap <silent> <Down> 4<C-e>
-nnoremap <Up> 4<C-y>
+nnoremap <Down> <C-e><C-e><C-e><C-e>jjjj
+nnoremap <Up> <C-y><C-y><C-y><C-y>kkkk
 nnoremap <Left> F<Space>h
 nnoremap <Right> f<Space>l
 nnoremap <Home> ^

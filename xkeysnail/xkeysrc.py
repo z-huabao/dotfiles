@@ -5,11 +5,11 @@
 """
 import re
 from xkeysnail.transform import define_keymap, K
-from pykeyboard import PyKeyboard
 
 # open numlock key
-k = PyKeyboard()
-k.tap_key(k.num_lock_key)
+# from pykeyboard import PyKeyboard
+# k = PyKeyboard()
+# k.tap_key(k.num_lock_key)
 
 define_keymap(None, {
     # Alt+hjkl to left,down,up,right
@@ -51,16 +51,23 @@ define_keymap(None, {
 define_keymap(re.compile("Nautilus"), {
     # nautilus Ctrl-Tab
     K("C-TAB"): K("C-Page_Down"),
-    K("C-F4"): K("C-w"),
     K("C-Shift-TAB"): K("C-Page_Up"),
+    K("C-F4"): K("C-w"),
+    K("Alt-q"): K("C-w"),
 }, "nautilus")
 
 define_keymap(re.compile("chrome"), {
-    # nautilus Ctrl-Tab
-    # K("Alt-h"): K("Alt-LEFT"),
-    # K("Alt-j"): K("C-Page_Up"),
-    # K("Alt-k"): K("C-Page_Down"),
-    # K("Alt-l"): K("Alt-RIGHT"),
     # disable Firefox "alt menu", config on web: 
     #   about:config?filter=ui.key.menuAccessKeyFocuses = false
+    K("Alt-q"): K("C-w"),
+}, "chrome")
+
+define_keymap(re.compile("gThumb"), {
+    K("Esc"): K("C-w"),
+    K("Alt-q"): K("C-w"),
+    K("Left"): K("Page_Up"),
+    K("Up"): K("Page_Up"),
+    K("Right"): K("Page_Down"),
+    K("Down"): K("Page_Down"),
+    # K("Btn_Scroll_up"): K("C-Btn_Scroll"),
 }, "chrome")
