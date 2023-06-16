@@ -44,6 +44,11 @@ alias ndocker="nvidia-docker"
 alias nvi="nvr -s"
 alias vi="nvim"
 
+# proxychains
+#alias pxapt="proxychains apt"
+#alias pxpip="proxychains pip"
+#alias pxwget="proxychains wget"
+
 
 # -------------------- env vars --------------------------
 # neovim

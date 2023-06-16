@@ -13,12 +13,11 @@ set autoread              " 文件修改之后自动载入
 set autowrite		      " :next, :make 命令之前自动保存
 set mouse=a		          " 允许使用鼠标
 set number 	              " 设置行号
-set relativenumber 	      " 设置相对行号
 "set vbs=4                 " 日志verbose
 
 
 " 切换行号显示
-nnoremap <F2> :set nonu!<CR>:set relativenumber!<CR>
+nnoremap <F2> :set nonu!<CR>
 
 
 " 空格翻页
@@ -28,8 +27,8 @@ vnoremap <Space> <C-f>
 vnoremap <Backspace> <C-b>
 
 " 滚动
-nnoremap <Down> 4<C-e>
-nnoremap <Up> 4<C-y>
+nnoremap <Down> <C-e><C-e><C-e><C-e>jjjj
+nnoremap <Up> <C-y><C-y><C-y><C-y>kkkk
 nnoremap <Left> F<Space>h
 nnoremap <Right> f<Space>l
 nnoremap <Home> ^

@@ -6,16 +6,17 @@ set noswapfile
 set t_Co=256
 set autoindent		      " 缩进
 set shiftround
+set tabstop=4
 set shiftwidth=4
 set expandtab             " 填充Tab
 set fdm=indent   	      " 代码折叠，光标在缩进下方时用za命令折叠或展开这块代码
-set foldlevel=3 	      " 默认展开3层，zm全部折叠一层，zr全部展开一层，zn全部展开
+set foldlevel=4 	      " 默认展开4层，zm全部折叠一层，zr全部展开一层，zn全部展开
 set cursorline            " 高亮光标行
 set ignorecase
 set autoread              " 文件修改之后自动载入
 set autowrite		      " :next, :make 命令之前自动保存
 set number 	              " 设置行号
-set relativenumber 	      " 设置相对行号
+"set relativenumber 	      " 设置相对行号
 set path+=/home/zhb/include
 "set mouse=a		          " 允许使用鼠标
 "set vbs=4                 " 日志verbose
@@ -134,6 +135,7 @@ let g:ranger_map_keys = 0
 nnoremap <silent> <Leader>r :RangerCurrentDirectory<CR>
 tnoremap <silent> <Esc><Leader>r <C-\><C-n>:RangerWorkingDirectory<CR>
 
+" ranger代替
 Plug 'kevinhwang91/rnvimr'
 let g:rnvimr_draw_border = 0
 let g:rnvimr_ranger_cmd = 'ranger --cmd="set draw_borders both"'
@@ -142,21 +144,9 @@ nnoremap <silent> <M-o> :RnvimrToggle<CR>
 tnoremap <silent> <M-o> <C-\><C-n>:RnvimrToggle<CR>
 tnoremap <silent> <M-=> <C-\><C-n>:RnvimrResize<CR>
 
-" 对齐文本
+" 对齐文本，选中多行文本后以给定字符(如=)为中心对齐
 Plug 'junegunn/vim-easy-align'
-xmap ta <Plug>(EasyAlign)
-nmap ta <Plug>(EasyAlign)<Space>
-
-" 括号高亮匹配
-"Plug 'tpope/vim-surround'
-
-" 多选同时编辑
-"Plug 'terryma/vim-multiple-cursors'
-
-" 跳转到定义
-"Plug 'davidhalter/jedi-vim'
-"let g:jedi#completions_enabled = 0
-"let g:jedi#rename_command = ""
+xmap al <Plug>(EasyAlign)
 
 " 自动补全, 跳转到定义
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -171,8 +161,7 @@ function! s:show_documentation()
     let isdoc = index(['vim','help'], &filetype) >= 0
     execute isdoc ? 'h '.expand('<cword>') : 'call CocAction("doHover")'
 endfunction
-" coc plugins:
-" coc-clangd, coc-json, coc-sh, coc-pyright, coc-snnipets
+" coc plugins: coc-clangd, coc-json, coc-sh, coc-pyright, coc-snnipets
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv',
     \ 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
 " coc-snippets
@@ -190,34 +179,19 @@ function! s:check_back_space() abort
 endfunction
 
 " 常用短语补全
-"Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " 自动补全括号
 Plug 'jiangmiao/auto-pairs'
 
-" 批量注释 F4
+" 批量注释 Ctrl-/
 Plug 'scrooloose/nerdcommenter'
 let g:NERDCustomDelimiters = {'kivy': {'left': '# '}, 'prototxt': {'left': '# '} }
 map <C-_> <Leader>ci<CR>
-map <F4> <Leader>ci<CR>
 
-" pep8 风格格式化代码
-Plug 'Chiel92/vim-autoformat'
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
-nnoremap <F6> :Autoformat<CR>
-
-" auto save
-Plug '907th/vim-auto-save'
-let g:auto_save = 1
-" 手动保存文件时删除行尾空格或Tab
-cnoremap w<CR> %s/^$\n\+\%$//ge<CR>:%s/\s\+$//e<CR>:w<CR>
-
-" search功能强化，%s替换智能化
+" search功能强化，%s替换可预览
 Plug 'osyo-manga/vim-over'
-nnoremap <silent> ? :OverCommandLine<CR>/
+nnoremap <silent> ? :OverCommandLine<CR>
 
 " send code to ipython to run
 "Plug 'z-huabao/vim-submode'
@@ -233,12 +207,17 @@ colorscheme molokai
 nnoremap <Leader>ev :split $MYVIMRC<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
+" 关掉Ctrl-z退出程序，改为撤销功能
+nnoremap <c-z> u
+vnoremap <c-z> u
+
 " 替换原有的记录命令功能，因为基本用不上
-nnoremap <Leader>q q
-nnoremap q :q
+"nnoremap <Leader>q q
+"nnoremap q :q
 
 " 切换行号显示
-nnoremap <F2> :set nonu!<CR>:set relativenumber!<CR>
+"nnoremap <F2> :set nonu!<CR>:set relativenumber!<CR>
+nnoremap <F2> :set nonu!<CR>
 
 " search selected word
 function! SearchSelected()
@@ -287,6 +266,7 @@ inoremap <C-v> <ESC>"+pa
 inoremap <A-v> <C-v>
 
 " w!!写入只读文件
+cnoremap w<CR> %s/^$\n\+\%$//ge<CR>:%s/\s\+$//e<CR>:w<CR>
 cmap w!! w !sudo tee >/dev/null %:p
 
 " 给当前单词添加引号
@@ -368,7 +348,7 @@ tnoremap <Esc><Esc> <C-\><C-n>
 
 function! SetTermMap()
     set nonumber
-    set norelativenumber
+    "set norelativenumber
     nnoremap <buffer> q i
     nnoremap <buffer> <Esc>_ <C-w>s:RangerWorkingDirectory<CR>
     nnoremap <buffer> <Esc>\ <C-w>v:RangerWorkingDirectory<CR>
@@ -383,12 +363,12 @@ endfunction
 
 function! PreOpenFile()
     set number
-    set relativenumber
     if line("'\"") > 1 && line("'\"") < line("$")
         " 打开文件时始终跳转到上次光标所在位置
         execute "normal! g'\""
     endif
 endfunction
+
 
 augroup buffer_enter
     autocmd!
@@ -402,7 +382,6 @@ augroup endgroup
 
 augroup buffer_leave
     autocmd!
-    "autocmd! bufwritepost init.vim source %    " vimrc文件修改之后自动加载
     "autocmd BufWritePre * :%s/\s\+$//e       " 保存文件时自动删除行尾空格或Tab
     "autocmd BufWritePre * :%s/^$\n\+\%$//ge  " 保存文件时自动删除末尾空行
 
@@ -410,12 +389,12 @@ augroup buffer_leave
     let s:bufs = ['quickfix', 'help']
     autocmd BufWinEnter * if index(s:bufs, &buftype)>=0 || bufname('%')=='coc://document'
                 \| nnoremap <buffer> q :q<CR> | endif
-    "autocmd BufLeave * if 'quickfix'==&buftype | q | endif
+    autocmd BufLeave * if &modifiable | :w | endif
 augroup end
 
 """""""""""""""""""""""""WINDOW MANAGER""""""""""""""""""""
 function! s:RestoreWindow()
-    execute t:zoom_winrestcmd
+    execute t:zoom_winrestcmd  " 有bug，考虑进入buffer时也做初始化
     let t:zoomed = 0
 endfunction
 

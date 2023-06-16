@@ -93,7 +93,7 @@ ln -s -f $plug_dir/nvim $home/.config/nvim
 ln -s -f $dotf_dir/nvim/init.vim $home/.config/nvim/init.vim
 ln -s -f $dotf_dir/nvim/coc-settings.json $home/.config/nvim/coc-settings.json
 ln -s -f $dotf_dir/nvim/ideavimrc $home/.ideavimrc
-ln -s -f $dotf_dir/nvim/vrapperrc $home/.vrapperrc
+ln -s -f $dotf_dir/nvim/ideavimrc $home/.vrapperrc
 
 vim_plug=$plug_dir/nvim/autoload/plug.vim
 if [ ! -f $vim_plug ]; then
